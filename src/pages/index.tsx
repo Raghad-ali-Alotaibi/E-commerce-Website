@@ -1,3 +1,5 @@
 export {Home} from "./Home"
 export {Error} from "./Error"
 export {ProductDetails} from "./ProductDetails"
+export {Register} from "./Register"
+export {Login} from "./Login"

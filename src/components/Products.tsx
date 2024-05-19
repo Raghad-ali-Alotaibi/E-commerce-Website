@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { fetchProducts } from "@/tookit/slices/ProductSlice"
+import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
 import { AppDispatch, RootState } from "@/tookit/store"
 import SingleProduct from "./SingleProduct"
+import { Horizontal } from "./Horizontal"
 
 const Products = () => {
   const { products, isLoading, error, totalPages } = useSelector(
@@ -14,15 +15,15 @@ const Products = () => {
 
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(4)
-  const [keyword, setkeyword] = useState("")
-  const [sortBy, setsortBy] = useState("price")
+  const [sortBy, setSortBy] = useState("price")
+  const [searchKeyword, setSearchKeyword] = useState("")
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchProducts({ pageNumber, pageSize, keyword, sortBy }))
+      await dispatch(fetchProducts({ pageNumber, pageSize, sortBy }))
     }
     fetchData()
-  }, [pageNumber, keyword, sortBy])
+  }, [pageNumber, sortBy])
 
   const handlePreviousPage = () => {
     setPageNumber((currentPage) => currentPage - 1)
@@ -31,32 +32,52 @@ const Products = () => {
   const handleNextPage = () => {
     setPageNumber((currentPage) => currentPage + 1)
   }
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setkeyword(event.target.value)
-  }
+
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setsortBy(event.target.value)
+    setSortBy(event.target.value)
+  }
+
+  const handleSearch = async () => {
+    if (searchKeyword.trim() !== "") {
+      await dispatch(searchProducts(searchKeyword))
+    } else {
+      // fetch all products
+      await dispatch(fetchProducts({ pageNumber, pageSize, sortBy }))
+    }
+  }
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(event.target.value)
   }
 
   return (
     <>
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
+      <p className="title__product">Our Products</p>
       <div className="container">
-        <input
-          type="search"
-          placeholder="Search Products"
-          className="search__products"
-          value={keyword}
-          onChange={handleSearchChange}
-          style={{ 
-            backgroundImage: `url('/images/search-icon.png')`,
-            backgroundPosition: "10px center",
-            backgroundSize: "20px 20px",
-            backgroundRepeat: "no-repeat",
-            paddingLeft: "35px"
-          }}
-        />
+        <div className="search__container">
+          <div className="search__content">
+            <input
+              type="search"
+              placeholder="Search Products"
+              value={searchKeyword}
+              onChange={handleInputChange}
+              className="search__products"
+              style={{
+                backgroundImage: `url('/images/search-icon.png')`,
+                backgroundPosition: "0.6rem center",
+                backgroundSize: "1.2rem 1.2rem",
+                backgroundRepeat: "no-repeat",
+                paddingLeft: "2.1rem",
+                flex: 1
+              }}
+            />
+            <button className="button__search" onClick={handleSearch}>
+              Search
+            </button>
+          </div>
+        </div>
+
         <div className="products__sort">
           <p className="products-sort__title">Sort By :</p>
           <select name="sort" id="sort" onChange={handleSortChange}>
@@ -65,6 +86,7 @@ const Products = () => {
           </select>
         </div>
       </div>
+      <Horizontal />
 
       <section className="products">
         {products &&

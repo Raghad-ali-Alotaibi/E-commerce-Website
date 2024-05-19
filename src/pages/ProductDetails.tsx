@@ -6,6 +6,7 @@ import PageTitle from "@/components/PageTitle"
 import { fetchProductBySlug } from "@/tookit/slices/ProductSlice"
 import { AppDispatch, RootState } from "@/tookit/store"
 import QuantitySelectorButton from "@/components/QuantitySelectorButton"
+import { Horizontal } from "@/components/Horizontal"
 
 export const ProductDetails = () => {
   const { productId } = useParams<{ productId: string }>()
@@ -19,10 +20,6 @@ export const ProductDetails = () => {
     }
     fetchData()
   }, [])
-
-  const Horizontal = () => {
-    return <hr className="horizontal" />
-  }
 
   return (
     <article className="details">

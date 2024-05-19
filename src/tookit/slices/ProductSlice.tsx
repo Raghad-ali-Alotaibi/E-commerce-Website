@@ -1,6 +1,5 @@
 import { ProductState } from "@/types"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-
 import api from "@/api"
 
 const initialState: ProductState = {
@@ -16,18 +15,23 @@ export const fetchProducts = createAsyncThunk(
   async ({
     pageNumber,
     pageSize,
-    keyword,
     sortBy
   }: {
     pageNumber: number
     pageSize: number
-    keyword: string
     sortBy: string
   }) => {
-    const response =
-      keyword.length > 0
-        ? await api.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}&keyword=${keyword}&sortBy=${sortBy}`)
-        : await api.get(`/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`)
+    const response = await api.get(
+      `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`
+    )
+    return response.data
+  }
+)
+
+export const searchProducts = createAsyncThunk(
+  "products/searchProducts",
+  async (keyword: string) => {
+    const response = await api.get(`/products/search?keyword=${keyword}`)
     return response.data
   }
 )
@@ -40,6 +44,7 @@ export const fetchProductBySlug = createAsyncThunk(
   }
 )
 
+// cases : pending , fulfilled , rejected
 const ProductSlice = createSlice({
   name: "products",
   initialState: initialState,
@@ -48,6 +53,10 @@ const ProductSlice = createSlice({
     builder.addCase(fetchProducts.fulfilled, (state, action) => {
       state.products = action.payload.data.items
       state.totalPages = action.payload.data.totalPages
+      state.isLoading = false
+    })
+    builder.addCase(searchProducts.fulfilled, (state, action) => {
+      state.products = action.payload.data
       state.isLoading = false
     })
     builder.addCase(fetchProductBySlug.fulfilled, (state, action) => {

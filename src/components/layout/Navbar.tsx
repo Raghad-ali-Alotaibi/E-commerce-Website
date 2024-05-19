@@ -9,10 +9,14 @@ const Navbar = () => {
             <Link to="/">
               <img className="logo" src="./images/logo.png" alt="logo" />
             </Link>
-            <div className="nav__search">Search</div>
             <div className="nav__active">
-              <div> Shopping Cart</div>
-              <div>UserMenu</div>
+              <div>Shopping Cart</div>
+              <div>
+                <Link to="/register">Register</Link>
+              </div>
+              <div>
+                <Link to="/login">Login</Link>
+              </div>
             </div>
           </div>
         </div>
