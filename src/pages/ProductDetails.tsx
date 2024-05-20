@@ -21,7 +21,7 @@ export const ProductDetails = () => {
       await dispatch(fetchProductBySlug(productSlug))
     }
     fetchData()
-  }, [dispatch,productSlug])
+  }, [])
 
   return (
     <article className="details">

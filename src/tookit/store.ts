@@ -8,7 +8,6 @@ export const store = configureStore({
   reducer: {
     ProductR: ProductReducer,
     userR: UserReducer,
-
   }
 })
 export type RootState = ReturnType<typeof store.getState>;

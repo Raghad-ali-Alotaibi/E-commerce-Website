@@ -16,7 +16,7 @@ export const fetchCategories = createAsyncThunk("categories/fetchCategories", as
 })
 
 // cases : pending , fulfilled , rejected
-const categorySlice = createSlice({
+const categoryReducer = createSlice({
   name: "categories",
   initialState: initialState,
   reducers: {},
@@ -37,4 +37,4 @@ const categorySlice = createSlice({
   }
 })
 
-export default categorySlice.reducer
+export default categoryReducer.reducer

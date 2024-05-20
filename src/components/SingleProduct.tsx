@@ -23,7 +23,7 @@ const SingleProduct = (props: { product: Product }) => {
           <button className="product__button">
             Add to cart<i className="fa-solid fa-cart-shopping" aria-hidden="true"></i>
           </button>
-          <Link to={`/products/${product.productId}`}>
+          <Link to={`/products/slug/${product.productSlug}`}>
             <button className="product__button">
               Show details <i className="fa-solid fa-ellipsis" aria-hidden="true"></i>
             </button>
