@@ -39,6 +39,40 @@
   align-items: center;
   gap: 2rem;
 }
+.menu__container {
+  display: relative;
+  z-index: 30;
+}
+.menu-toggle__open {
+  padding: 0.5rem;
+  border: 0.063rem solid #cbd5e0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 624.938rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+  color: #718096;
+}
+.menu-toggle__open:hover {
+  color: rgb(51 65 85);
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+.open {
+  position: absolute;
+  border-radius: 0.375rem;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 10.625rem;
+  background-color: #fff;
+  overflow: hidden;
+  right: 0;
+  top: 3rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
 /* nav end */
 
 /* footer start*/
@@ -112,7 +146,7 @@ ul {
 /* home end */
 
 /* products start */
-.title__product{
+.title__product {
   font-weight: 600;
   font-size: 2rem;
   margin-top: 4rem;
@@ -120,14 +154,14 @@ ul {
   text-align: center;
   color: #7c9477;
 }
-.container{
+.container {
   display: flex;
   margin-top: 5rem;
   margin-bottom: 3rem;
-	place-content: space-around;
+  place-content: space-around;
   align-items: center;
 }
-.search__container{
+.search__container {
   width: 40%;
   display: flex;
   justify-content: flex-end;
@@ -140,8 +174,8 @@ ul {
   text-align: center;
   width: 100%;
 }
-.search__products{
-  flex: 1; 
+.search__products {
+  flex: 1;
   padding: 0.9rem;
   border: none;
   outline: none;
@@ -151,7 +185,7 @@ ul {
   margin-bottom: 0.625rem;
   font-size: 1rem;
 }
-.button__search{
+.button__search {
   padding: 0.7rem 0.7rem;
   margin-bottom: 0.6rem;
   background-color: #e7e5e5;
@@ -162,20 +196,20 @@ ul {
   cursor: pointer;
   font-size: 1rem;
 }
-.button__search:hover{
+.button__search:hover {
   background-color: #ddd;
 }
-.products__sort{
+.products__sort {
   display: flex;
   gap: 0.9rem;
 }
-.products-sort__title{
+.products-sort__title {
   font-weight: 700;
   color: rgb(72, 77, 84);
 }
 select {
   padding: 0.5rem;
-  border-radius:  0.5rem;
+  border-radius: 0.5rem;
   border: 0.063rem solid #ccc;
   background-color: #f9f9f9;
   font-size: 0.875rem;
@@ -356,7 +390,7 @@ span {
   padding: 0.7rem 0.8rem;
   color: white;
 }
-.product-details__cart:hover{
+.product-details__cart:hover {
   background-color: #60735c;
 }
 /* Product Details end */
@@ -397,6 +431,78 @@ span {
 }
 /*  Error end */
 
+/* Register and Login start */
+.title__register ,.title__login {
+  font-weight: 600;
+  font-size: 2rem;
+  text-align: center;
+  color: #7c9477;
+}
+.register,
+.login {
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 3rem;
+  padding-top: 6rem;
+}
+.register__container,
+.login__container {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  padding: 2rem;
+}
+hr {
+  background-color: #64748b;
+  width: 100%;
+  height: 0.063rem;
+}
+.form__field {
+  margin-bottom: 1rem;
+  width: 100%;
+} 
+input { /* need to modfiy */
+  width: 100%;
+  outline: none;
+  background-color: #ffffff;
+  font-weight: 300;
+  border-width: 0.125rem;
+  border-radius: 0.375rem;
+}
+.register__already {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #60735c;
+}
+.login__link {
+  padding-left: 0.5rem;
+  text-decoration: underline;
+  color:#555a54
+}
+.button__register,
+.button__login { /* need to modfiy */
+  width: 100%;
+  padding: 0.625rem;
+  background-color: #7c9477;
+  color: #9d4a4a;
+  border: none;
+  border-radius: 0.313rem;
+  cursor: pointer;
+}
+.button__register:hover,
+.button__login:hover {
+  background-color: #60735c;
+  color: white;
+}
+/* Register and Login end */
+
+
 /* Responsive Screens */
 @media (min-width: 768px) {
   .nav__active {
@@ -432,5 +538,8 @@ span {
   .homeBanner__discounts {
     font-size: 3rem;
     line-height: 1;
+  }
+  .register__container {
+    padding: 2rem;
   }
 }

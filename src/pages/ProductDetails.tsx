@@ -1,25 +1,27 @@
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 
 import PageTitle from "@/components/PageTitle"
 import { fetchProductBySlug } from "@/tookit/slices/ProductSlice"
-import { AppDispatch, RootState } from "@/tookit/store"
+import { AppDispatch } from "@/tookit/store"
 import QuantitySelectorButton from "@/components/QuantitySelectorButton"
 import { Horizontal } from "@/components/Horizontal"
+import useProductState from "@/hooks/useProductState"
 
 export const ProductDetails = () => {
-  const { productId } = useParams<{ productId: string }>()
-  const { product, isLoading, error } = useSelector((state: RootState) => state.ProductR)
+  const { productSlug } = useParams<{ productSlug: string }>()
+
+  const { product, isLoading, error} = useProductState();
 
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchProductBySlug(productId))
+      await dispatch(fetchProductBySlug(productSlug))
     }
     fetchData()
-  }, [])
+  }, [dispatch,productSlug])
 
   return (
     <article className="details">

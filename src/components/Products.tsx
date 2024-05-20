@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
-import { AppDispatch, RootState } from "@/tookit/store"
+import { AppDispatch } from "@/tookit/store"
 import SingleProduct from "./SingleProduct"
 import { Horizontal } from "./Horizontal"
+import useProductState from "@/hooks/useProductState"
 
 const Products = () => {
-  const { products, isLoading, error, totalPages } = useSelector(
-    (state: RootState) => state.ProductR
-  )
+  const { products, isLoading, error, totalPages } = useProductState();
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -38,7 +37,7 @@ const Products = () => {
   }
 
   const handleSearch = async () => {
-    if (searchKeyword.trim() !== "") {
+    if (searchKeyword.trim()) {
       await dispatch(searchProducts(searchKeyword))
     } else {
       // fetch all products
@@ -91,7 +90,7 @@ const Products = () => {
       <section className="products">
         {products &&
           products.length > 0 &&
-          products.map((product) => <SingleProduct key={product.productId} product={product} />)}
+          products.map((product) => <SingleProduct key={product.productSlug} product={product} />)}
       </section>
       <div className="pagination">
         <button

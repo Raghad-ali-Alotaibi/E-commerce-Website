@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import UserMenu from "../UserMenu"
 
 const Navbar = () => {
   return (
@@ -11,12 +12,13 @@ const Navbar = () => {
             </Link>
             <div className="nav__active">
               <div>Shopping Cart</div>
-              <div>
+              <div><UserMenu/></div>
+              {/* <div>
                 <Link to="/register">Register</Link>
               </div>
               <div>
                 <Link to="/login">Login</Link>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

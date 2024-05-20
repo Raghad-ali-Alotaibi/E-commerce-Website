@@ -25,10 +25,12 @@ export const loginUser = createAsyncThunk(
   }
 )
 
-const UserSlice = createSlice({
+
+
+const UserReducer = createSlice({
   name: "users",
   initialState: initialState,
   reducers: {},
 })
 
-export default UserSlice.reducer
+export default UserReducer.reducer

@@ -1,11 +1,3 @@
-export type Category = {
-  categoryId: number
-  categoryName: string
-  categorySlug: string
-  categoryDescription: string
-  products: Product[]
-}
-
 export type Product = {
   productId: number
   productName: string
@@ -15,7 +7,7 @@ export type Product = {
   productImage: string
   productQuantityInStock: number
   categoryId: number
-  category: Category[]
+  categories: Category[]
 }
 
 export type ProductState = {
@@ -52,4 +44,19 @@ export type FormData = {
 export type LoginFormData = {
   email: string
   password: string
+}
+
+export type Category = {
+  categoryId: number
+  categoryName: string
+  categorySlug: string
+  categoryDescription: string
+  products: Product[]
+}
+
+export type CategoryStates = {
+  categories: Category[]
+  category: Category | null
+  error: string | null
+  isLoading: boolean
 }

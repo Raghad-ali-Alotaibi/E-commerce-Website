@@ -1,5 +1,6 @@
-import { ProductState } from "@/types"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+
+import { ProductState } from "@/types"
 import api from "@/api"
 
 const initialState: ProductState = {
@@ -38,14 +39,15 @@ export const searchProducts = createAsyncThunk(
 
 export const fetchProductBySlug = createAsyncThunk(
   "products/fetchProductBySlug",
-  async (productId: string | undefined) => {
-    const response = await api.get(`/products/${productId}`)
+  async (productSlug: string | undefined) => {
+    const response = await api.get(`/products/slug/${productSlug}`)
     return response.data
   }
 )
 
+
 // cases : pending , fulfilled , rejected
-const ProductSlice = createSlice({
+const ProductReducer = createSlice({
   name: "products",
   initialState: initialState,
   reducers: {},
@@ -80,4 +82,4 @@ const ProductSlice = createSlice({
   }
 })
 
-export default ProductSlice.reducer
+export default ProductReducer.reducer
