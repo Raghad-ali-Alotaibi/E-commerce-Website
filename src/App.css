@@ -500,6 +500,12 @@ input { /* need to modfiy */
   background-color: #60735c;
   color: white;
 }
+span{
+  color: #981313;
+  font-size: 0.9rem;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 /* Register and Login end */
 
 

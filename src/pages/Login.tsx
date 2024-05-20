@@ -19,7 +19,7 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const response = await dispatch(loginUser(data))
-      toastSuccess(response.payload.message + "Successfully logged in")
+      toastSuccess(response.payload.message + "  logged in")
     } catch (error) {
       toastError("Login failed")
     }
@@ -36,14 +36,14 @@ export const Login = () => {
               type="email"
               placeholder="Enter your email"
               {...register("email", {
-                required: "email is required",
+                required: "Email is required",
                 pattern: {
                   value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                   message: "invalid email address"
                 }
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <span>{errors.email.message}</span>}
           </div>
 
           <div className="form__field">
@@ -60,7 +60,7 @@ export const Login = () => {
                 }
               })}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && <span>{errors.password.message}</span>}
           </div>
           <button className="button__login" type="submit">
             Login

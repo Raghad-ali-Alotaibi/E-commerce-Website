@@ -21,7 +21,7 @@ export const Register = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await dispatch(registerUser(data))
-      toastSuccess(response.payload.message + "Successfully Registered")
+      toastSuccess(response.payload.message + "  Registered")
       navigate("/login")
     } catch (error) {
       toastError("Registration failed")
@@ -43,7 +43,7 @@ export const Register = () => {
                 minLength: { value: 4, message: "First Name must be more than 4 characters" }
               })}
             />
-            {errors.firstName && <p>{errors.firstName.message}</p>}
+            {errors.firstName && <span>{errors.firstName.message}</span>}
           </div>
 
           <div className="form__field">
@@ -55,7 +55,7 @@ export const Register = () => {
                 maxLength: { value: 30, message: "Last Name must be less than 30 characters" }
               })}
             />
-            {errors.lastName && <p>{errors.lastName.message}</p>}
+            {errors.lastName && <span>{errors.lastName.message}</span>}
           </div>
 
           <div className="form__field">
@@ -63,14 +63,14 @@ export const Register = () => {
               type="email"
               placeholder="Enter your email"
               {...register("email", {
-                required: "email is required",
+                required: "Email is required",
                 pattern: {
                   value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                   message: "invalid email address"
                 }
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && <span>{errors.email.message}</span>}
           </div>
 
           <div className="form__field">
@@ -88,7 +88,7 @@ export const Register = () => {
                 }
               })}
             />
-            {errors.password && <p>{errors.password.message}</p>}
+            {errors.password && <span>{errors.password.message}</span>}
           </div>
 
           <div className="form__field">
@@ -104,7 +104,7 @@ export const Register = () => {
                 }
               })}
             />
-            {errors.mobile && <p>{errors.mobile.message}</p>}
+            {errors.mobile && <span>{errors.mobile.message}</span>}
           </div>
           <button type="submit" className="button__register">
             Register
