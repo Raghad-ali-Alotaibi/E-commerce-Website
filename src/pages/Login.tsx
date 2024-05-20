@@ -1,11 +1,11 @@
 import { useForm, SubmitHandler } from "react-hook-form"
-import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
 
 import { AppDispatch } from "@/tookit/store"
 import { loginUser } from "@/tookit/slices/UserSlice"
 import { LoginFormData } from "@/types"
 import PageTitle from "@/components/PageTitle"
+import { toastError, toastSuccess } from "@/components/Notifications "
 
 export const Login = () => {
   const dispatch: AppDispatch = useDispatch()
@@ -19,9 +19,9 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const response = await dispatch(loginUser(data))
-      toast.success(response.payload.message)
+      toastSuccess(response.payload.message + "Successfully logged in")
     } catch (error) {
-      toast.error("Login failed")
+      toastError("Login failed")
     }
   }
   return (

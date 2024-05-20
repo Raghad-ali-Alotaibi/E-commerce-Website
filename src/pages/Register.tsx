@@ -1,5 +1,4 @@
 import { useForm, SubmitHandler } from "react-hook-form"
-import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -7,6 +6,7 @@ import { AppDispatch } from "@/tookit/store"
 import { registerUser } from "@/tookit/slices/UserSlice"
 import { FormData } from "@/types"
 import PageTitle from "@/components/PageTitle"
+import { toastError, toastSuccess } from "@/components/Notifications "
 
 export const Register = () => {
   const navigate = useNavigate()
@@ -21,10 +21,10 @@ export const Register = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
       const response = await dispatch(registerUser(data))
-      toast.success(response.payload.message)
+      toastSuccess(response.payload.message + "Successfully Registered")
       navigate("/login")
     } catch (error) {
-      toast.error("Registration failed")
+      toastError("Registration failed")
     }
   }
   return (
