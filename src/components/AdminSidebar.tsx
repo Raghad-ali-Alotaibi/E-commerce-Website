@@ -6,7 +6,7 @@ const AdminSidebar = () => {
   const { userData } = useUserState()
 
   return (
-    <aside>
+    <div>
       <div>
         <h2>Your Profile</h2>
         <p>{userData?.firstName}</p>
@@ -26,7 +26,7 @@ const AdminSidebar = () => {
           <Link to="/dashboard/admin/orders">Orders</Link>
         </li>
       </ul>
-    </aside>
+    </div>
   )
 }
 

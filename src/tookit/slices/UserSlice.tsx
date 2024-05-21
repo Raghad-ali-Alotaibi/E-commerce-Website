@@ -12,6 +12,7 @@ const initialState: UserState = {
   error: null,
   isLoading: false,
   userData: data.userData,
+  token: data.token,
   isLoggedIn: data.isLoggedIn
 }
 
@@ -32,11 +33,13 @@ const UserReducer = createSlice({
   reducers: {
     logout(state) {
       state.userData = null
+      state.token = null
       state.isLoggedIn = false
       localStorage.setItem(
         "loginData",
         JSON.stringify({
           userData: state.userData,
+          token: state.token,
           isLoggedIn: state.isLoggedIn
         })
       )
@@ -46,11 +49,13 @@ const UserReducer = createSlice({
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoggedIn = true
-        state.userData = null
+        state.userData = action.payload.data
+        state.token = action.payload.data.token
         localStorage.setItem(
           "loginData",
           JSON.stringify({
             userData: state.userData,
+            token: state.token,
             isLoggedIn: state.isLoggedIn
           })
         )

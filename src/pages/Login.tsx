@@ -21,8 +21,8 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const response = await dispatch(loginUser(data))
+      console.log(response)
       const isAdmin = response.payload.data.isAdmin
-      console.log(response.payload.data.isAdmin)
       navigate(isAdmin ? "/dashboard/admin" : "/dashboard/user")
     } catch (error) {
       toastError("Login failed")

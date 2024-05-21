@@ -32,7 +32,8 @@ export type UserState = {
   error: null | string
   isLoading: boolean
   isLoggedIn: boolean
-  userData: null | User
+  userData: User | null
+  token: null | string
 }
 
 export type FormData = {

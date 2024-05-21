@@ -4,7 +4,7 @@ export const UserOrders = () => {
   return (
     <div>
       <UserSidebar />
-      <div>UserOrders</div>
+      <div>User Orders</div>
     </div>
   )
 }
