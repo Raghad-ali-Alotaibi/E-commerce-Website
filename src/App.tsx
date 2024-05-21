@@ -1,11 +1,27 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
-import { Home, ProductDetails, Register, Login, Error, DashboardAdmin, DashboardUser} from "@/pages/Pages"
+import {
+  Home,
+  ProductDetails,
+  Register,
+  Login,
+  Error,
+  DashboardAdmin,
+  DashboardUser,
+  UserOrders,
+  UserProfile,
+  Categories,
+  Orders,
+  Users,
+  Products
+} from "@/pages/Pages"
 import "./App.css"
+import AdminRoute from "./Routers/AdminRoute"
+import UserRoute from "./Routers/UserRoute"
 
 function App() {
   return (
@@ -19,16 +35,19 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
 
-          <Route path="/dashboard/user" element={<DashboardUser />} />
-          <Route path="/dashboard/user/profile" element={<DashboardUser />} />
-          <Route path="/dashboard/user/orders" element={<DashboardUser />} />
+          <Route path="/dashboard" element={<UserRoute />}>
+            <Route path="user" element={<DashboardUser />} />
+            <Route path="user/profile" element={<UserProfile />} />
+            <Route path="user/orders" element={<UserOrders />} />
+          </Route>
 
-          <Route path="/dashboard/admin" element={<DashboardAdmin />} />
-          <Route path="/dashboard/admin/categories" element={<DashboardAdmin />} />
-          <Route path="/dashboard/admin/products" element={<DashboardAdmin />} />
-          <Route path="/dashboard/admin/users" element={<DashboardAdmin />} />
-          <Route path="/dashboard/admin/orders" element={<DashboardAdmin />} />
-
+          <Route path="/dashboard" element={<AdminRoute />}>
+            <Route path="admin" element={<DashboardAdmin />} />
+            <Route path="admin/categories" element={<Categories />} />
+            <Route path="admin/products" element={<Products />} />
+            <Route path="admin/users" element={<Users />} />
+            <Route path="admin/orders" element={<Orders />} />
+          </Route>
 
           <Route path="*" element={<Error />} />
         </Routes>

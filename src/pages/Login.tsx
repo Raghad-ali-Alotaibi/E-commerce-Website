@@ -1,13 +1,15 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 import { AppDispatch } from "@/tookit/store"
 import { loginUser } from "@/tookit/slices/UserSlice"
 import { LoginFormData } from "@/types"
 import PageTitle from "@/components/PageTitle"
-import { toastError, toastSuccess } from "@/components/Notifications "
+import { toastError} from "@/components/Notifications "
 
 export const Login = () => {
+  const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
   const {
@@ -19,7 +21,9 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const response = await dispatch(loginUser(data))
-      toastSuccess(response.payload.message + "  logged in")
+      const isAdmin = response.payload.data.isAdmin
+      console.log(response.payload.data.isAdmin)
+      navigate(isAdmin ? "/dashboard/admin" : "/dashboard/user")
     } catch (error) {
       toastError("Login failed")
     }

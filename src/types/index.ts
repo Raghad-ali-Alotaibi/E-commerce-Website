@@ -24,13 +24,15 @@ export type User = {
   email: string
   mobile: string
   password: string
-  isAdmin?: string
-  isBanned?: string
+  isAdmin: string
+  isBanned: string
 }
 
 export type UserState = {
   error: null | string
   isLoading: boolean
+  isLoggedIn: boolean
+  userData: null | User
 }
 
 export type FormData = {
