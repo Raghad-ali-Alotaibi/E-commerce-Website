@@ -62,8 +62,7 @@ const Footer = () => {
           <h3 className="footer__title">About Us</h3>
           <p className="about__description">
             At our electronics store, we are dedicated to providing the latest and greatest devices
-            and accessories to our customers. With a wide selection of phones, TVs, laptops,
-            watches, and accessories.
+            to our customers. With a wide selection of phones, TVs, laptops, watches.
           </p>
           <p>© {new Date().getFullYear()} Tech Hive. All rights reserved.</p>
         </div>

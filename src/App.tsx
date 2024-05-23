@@ -14,14 +14,14 @@ import {
   DashboardUser,
   UserOrders,
   UserProfile,
-  Categories,
   Orders,
-  Users,
-  Products
+  AdminProducts,
+  AdminUserManagement
 } from "@/pages/Pages"
 import "./App.css"
 import AdminRoute from "./Routers/AdminRoute"
 import UserRoute from "./Routers/UserRoute"
+import AdminCategories from "./components/AdminCategories"
 
 function App() {
   return (
@@ -43,9 +43,9 @@ function App() {
 
           <Route path="/dashboard" element={<AdminRoute />}>
             <Route path="admin" element={<DashboardAdmin />} />
-            <Route path="admin/categories" element={<Categories />} />
-            <Route path="admin/products" element={<Products />} />
-            <Route path="admin/users" element={<Users />} />
+            <Route path="admin/categories" element={<AdminCategories />} />
+            <Route path="admin/products" element={<AdminProducts />} />
+            <Route path="admin/users" element={<AdminUserManagement />} />
             <Route path="admin/orders" element={<Orders />} />
           </Route>
 

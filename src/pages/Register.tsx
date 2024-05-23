@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { AppDispatch } from "@/tookit/store"
 import { registerUser } from "@/tookit/slices/UserSlice"
-import { FormData } from "@/types"
+import { RegisterFormData } from "@/types"
 import PageTitle from "@/components/PageTitle"
 import { toastError, toastSuccess } from "@/components/Notifications "
 
@@ -16,9 +16,9 @@ export const Register = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormData>()
+  } = useForm<RegisterFormData>()
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
       const response = await dispatch(registerUser(data))
       toastSuccess(response.payload.message + "  Registered")

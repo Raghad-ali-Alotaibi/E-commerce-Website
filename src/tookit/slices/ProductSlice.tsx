@@ -57,22 +57,22 @@ const ProductReducer = createSlice({
       state.totalPages = action.payload.data.totalPages
       state.isLoading = false
     })
-    builder.addCase(searchProducts.fulfilled, (state, action) => {
+    .addCase(searchProducts.fulfilled, (state, action) => {
       state.products = action.payload.data
       state.isLoading = false
     })
-    builder.addCase(fetchProductBySlug.fulfilled, (state, action) => {
+    .addCase(fetchProductBySlug.fulfilled, (state, action) => {
       state.product = action.payload.data
       state.isLoading = false
     })
-    builder.addMatcher(
+    .addMatcher(
       (action) => action.type.endsWith("/pending"),
       (state) => {
         state.error = null
         state.isLoading = true
       }
     )
-    builder.addMatcher(
+    .addMatcher(
       (action) => action.type.endsWith("/rejected"),
       (state, action) => {
         state.error = "An error occurred"

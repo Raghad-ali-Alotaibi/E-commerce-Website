@@ -4,7 +4,6 @@ export const DashboardAdmin = () => {
   return (
     <div>
       <AdminSidebar />
-      <div></div>
     </div>
   )
 }

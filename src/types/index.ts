@@ -19,16 +19,18 @@ export type ProductState = {
 }
 
 export type User = {
+  userId?: number
   firstName: string
   lastName: string
   email: string
   mobile: string
   password: string
-  isAdmin: string
-  isBanned: string
+  isAdmin?: string
+  isBanned?: string
 }
 
 export type UserState = {
+  users: User[]
   error: null | string
   isLoading: boolean
   isLoggedIn: boolean
@@ -36,7 +38,7 @@ export type UserState = {
   token: null | string
 }
 
-export type FormData = {
+export type RegisterFormData = {
   firstName: string
   lastName: string
   email: string
@@ -44,9 +46,21 @@ export type FormData = {
   mobile: string
 }
 
+export type UpdateFormData = {
+  firstName: string
+  lastName: string
+}
+
 export type LoginFormData = {
   email: string
   password: string
+}
+
+// for Local Storage
+export type LoginData = {
+  isLoggedIn: boolean
+  userData: User | null
+  token: string
 }
 
 export type Category = {
@@ -62,4 +76,9 @@ export type CategoryStates = {
   category: Category | null
   error: string | null
   isLoading: boolean
+}
+
+export type CreateFormData = {
+  categoryName: string
+  categoryDescription: string
 }

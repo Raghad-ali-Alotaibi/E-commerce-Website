@@ -9,19 +9,24 @@ const UserMenu = () => {
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev)
   }, [])
+
   return (
     <div className="menu__container">
       <div className="menu-toggle__open" onClick={toggleOpen}>
-        <RxAvatar />
-        <AiFillCaretDown />
+        <div className="avatar-container">
+          <RxAvatar size={25} />
+        </div>
+        <div className="caret-icon-container">
+          <AiFillCaretDown size={25} />
+        </div>
       </div>
       {isOpen && (
-        <div className="open">
+        <div className="dropdown-menu">
           <div>
             <Link to="/register">Register</Link>
           </div>
           <div>
-            <Link to="/Login">Login</Link>
+            <Link to="/login">Login</Link>
           </div>
         </div>
       )}

@@ -22,7 +22,7 @@ export const Login = () => {
     try {
       const response = await dispatch(loginUser(data))
       console.log(response)
-      const isAdmin = response.payload.data.isAdmin
+      const isAdmin = response.payload.data.userDto.isAdmin
       navigate(isAdmin ? "/dashboard/admin" : "/dashboard/user")
     } catch (error) {
       toastError("Login failed")

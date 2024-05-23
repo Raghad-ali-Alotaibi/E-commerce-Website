@@ -1,27 +1,44 @@
+import React from "react"
 import { Link } from "react-router-dom"
+import { HiUser, HiShoppingBag, HiChartPie } from "react-icons/hi"
 
-import useUserState from "@/hooks/useUserState"
+// Define the type for the 'to' prop
+interface SidebarItemProps {
+  to: string
+  icon: React.ReactNode
+  children: React.ReactNode
+}
 
-const UserSidebar = () => {
-  const { userData } = useUserState()
-
+const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, children }) => {
   return (
-    <aside className="sidebar-container">
-      <div>
-        <h2>Your Profile</h2>
-        <p>{userData?.firstName}</p> {/* need fix  */}
-        <p>{userData?.email}</p> {/* need fix  */}
-      </div>
-      <ul>
-        <li>
-          <Link to="/dashboard/user/profile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/dashboard/user/orders">Orders</Link>
-        </li>
-      </ul>
-    </aside>
+    <Link to={to} className="sidebar-item">
+      <span className="sidebar-icon">{icon}</span>
+      <span className="sidebar-text">{children}</span>
+    </Link>
   )
 }
 
+const UserSidebar = () => {
+  return (
+    <div className="sidebar-container">
+      <div className="sidebar">
+        <SidebarItem to="#" icon={<HiChartPie size={25} />}>
+          Dashboard
+        </SidebarItem>
+      </div>
+
+      <div className="sidebar">
+        <SidebarItem to="/dashboard/user/profile" icon={<HiUser size={25} />}>
+          Profile
+        </SidebarItem>
+      </div>
+
+      <div className="sidebar">
+        <SidebarItem to="/dashboard/user/orders" icon={<HiShoppingBag size={25} />}>
+          Orders
+        </SidebarItem>
+      </div>
+    </div>
+  )
+}
 export default UserSidebar
