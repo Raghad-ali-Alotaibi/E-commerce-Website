@@ -14,9 +14,9 @@ import {
   DashboardUser,
   UserOrders,
   UserProfile,
-  Orders,
   AdminProducts,
-  AdminUserManagement
+  AdminUserManagement,
+  AdminOrders
 } from "@/pages/Pages"
 import "./App.css"
 import AdminRoute from "./Routers/AdminRoute"
@@ -46,7 +46,7 @@ function App() {
             <Route path="admin/categories" element={<AdminCategories />} />
             <Route path="admin/products" element={<AdminProducts />} />
             <Route path="admin/users" element={<AdminUserManagement />} />
-            <Route path="admin/orders" element={<Orders />} />
+            <Route path="admin/orders" element={<AdminOrders />} />
           </Route>
 
           <Route path="*" element={<Error />} />

@@ -19,28 +19,13 @@ export const AdminUserManagement  = () => {
   }, [])
 
   return (
-    <>
+    <div className="container">
     {isLoading && <p>Loading</p>}
     {error && <p>error{error}</p>}
     <AdminSidebar />
-    <table>
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Email</th>
-          <th>Is Admin</th>
-          <th>Is Banned</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => (
-          <SingelUser key={user.userId} user={user} />
-        ))}
-      </tbody>
-    </table>
-  </>
+    <div className="content">
+    </div>
+  </div>
   )
 }
 

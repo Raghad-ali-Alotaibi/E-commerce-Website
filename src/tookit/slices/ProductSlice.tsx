@@ -16,18 +16,25 @@ export const fetchProducts = createAsyncThunk(
   async ({
     pageNumber,
     pageSize,
-    sortBy
+    sortBy,
+    selectedCategories
   }: {
-    pageNumber: number
-    pageSize: number
-    sortBy: string
+    pageNumber: number;
+    pageSize: number;
+    sortBy: string;
+    selectedCategories: number[];
   }) => {
-    const response = await api.get(
-      `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`
-    )
-    return response.data
+    let url = `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`;
+    
+    if (selectedCategories.length > 0) {
+      const categoryQueryString = selectedCategories.map(catId => `categoryId=${catId}`).join('&');
+      url += `&${categoryQueryString}`;
+    }
+    const response = await api.get(url);
+    return response.data;
   }
-)
+);
+
 
 export const searchProducts = createAsyncThunk(
   "products/searchProducts",

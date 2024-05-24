@@ -42,6 +42,7 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: Lo
 export const UpdateUser = createAsyncThunk(
   "users/UpdateUser",
   async ({ updateUserData, userId }: { updateUserData: UpdateFormData , userId: number }) => {
+    console.log(getToken)
     const response = await api.put(`/users/${userId}`, updateUserData,{
       headers: {
         Authorization: `Bearer ${getToken()}`
@@ -50,6 +51,7 @@ export const UpdateUser = createAsyncThunk(
       return response.data
   }
 )
+
 
 // need fix
 export const deleteUser = createAsyncThunk("categories/deleteUser", async (userId: number) => {
@@ -79,9 +81,6 @@ const UserReducer = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      console.log(action.payload.data.userDto)
-      console.log(action.payload.data.jwt)
-
       state.isLoggedIn = true
       state.userData = action.payload.data.userDto
       state.token = action.payload.data.jwt

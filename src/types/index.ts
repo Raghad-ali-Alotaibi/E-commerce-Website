@@ -19,7 +19,7 @@ export type ProductState = {
 }
 
 export type User = {
-  userId?: number
+  userId: number 
   firstName: string
   lastName: string
   email: string

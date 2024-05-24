@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { Table } from "flowbite-react"
 
 import { AppDispatch, RootState } from "@/tookit/store"
 import { CreateCategories, fetchCategories } from "@/tookit/slices/CategorySlice"
-import SingelCategory from "./SingelCategory"
 import AdminSidebar from "@/components/AdminSidebar"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { CreateFormData } from "@/types"
+import SingleCategory from "./SingelCategory"
 
 const AdminCategories = () => {
   const { categories, isLoading, error } = useSelector((state: RootState) => state.categoryR)
@@ -26,7 +27,7 @@ const AdminCategories = () => {
     }
     fetchData()
   }, [])
-// need fix
+  // need fix
   const onSubmit: SubmitHandler<CreateFormData> = async (data) => {
     try {
       const response = await dispatch(CreateCategories(data))
@@ -37,59 +38,67 @@ const AdminCategories = () => {
   }
 
   return (
-    <>
+    <div className="container">
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
-      <AdminSidebar />
-      <p>create categories</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="form__field">
-          <input
-            type="text"
-            {...register("categoryName", {
-              required: "Category Name is required",
-              maxLength: {
-                value: 30,
-                message: "Last Name must be less than 30 characters"
-              }
-            })}
-          />
-          {errors.categoryName && <span>{errors.categoryName.message}</span>}
-        </div>
+        <AdminSidebar />
+      <div className="content">
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <h2 className="form-title">Create Category</h2>
+          <div className="input-container">
+            <input
+              type="text"
+              className="input-field"
+              {...register("categoryName", {
+                required: "Category Name is required",
+                maxLength: {
+                  value: 30,
+                  message: "Category Name must be less than 30 characters"
+                }
+              })}
+              placeholder="Category Name"
+            />
+            {errors.categoryName && (
+              <span className="error-message">{errors.categoryName.message}</span>
+            )}
+          </div>
 
-        <div className="form__field">
-          <input
-            type="text"
-            {...register("categoryDescription", {
-              required: "Description is required",
-              maxLength: {
-                value: 30,
-                message: "Last Name must be less than 30 characters"
-              }
-            })}
-          />
-          {errors.categoryDescription && <span>{errors.categoryDescription.message}</span>}
-        </div>
-        <button type="submit" className="button__register">
-          create
-        </button>
-      </form>
+          <div className="input-container">
+            <input
+              type="text"
+              className="input-field"
+              {...register("categoryDescription", {
+                required: "Description is required",
+                maxLength: {
+                  value: 30,
+                  message: "Description must be less than 30 characters"
+                }
+              })}
+              placeholder="Category Description"
+            />
+            {errors.categoryDescription && (
+              <span className="error-message">{errors.categoryDescription.message}</span>
+            )}
+          </div>
+          <button type="submit" className="submit">
+            Create
+          </button>
+        </form>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((category) => (
-            <SingelCategory key={category.categoryId} category={category} />
-          ))}
-        </tbody>
-      </table>
-    </>
+        <Table>
+          <Table.Head>
+            <Table.HeadCell className="table-head-cell">Name</Table.HeadCell>
+            <Table.HeadCell className="table-head-cell">Description</Table.HeadCell>
+            <Table.HeadCell className="table-head-cell">Actions</Table.HeadCell>
+          </Table.Head>
+          <Table.Body>
+            {categories.map((category) => (
+              <SingleCategory key={category.categoryId} category={category} />
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+    </div>
   )
 }
 export default AdminCategories

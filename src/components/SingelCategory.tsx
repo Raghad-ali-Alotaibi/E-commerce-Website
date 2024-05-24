@@ -1,15 +1,15 @@
+import { Table } from "flowbite-react"
+import { useDispatch } from "react-redux"
+import { MdEditSquare, MdDeleteForever } from "react-icons/md";
 import { deleteCategories } from "@/tookit/slices/CategorySlice"
 import { AppDispatch } from "@/tookit/store"
 import { Category } from "@/types"
-import { useDispatch } from "react-redux"
 
-const SingelCategory = (props: { category: Category }) => {
+const SingleCategory = (props: { category: Category }) => {
   const { category } = props
-
   const dispatch: AppDispatch = useDispatch()
 
   const handleDelete = async (id: number) => {
-    dispatch(deleteCategories(id))
     try {
       const response = await dispatch(deleteCategories(id))
       console.log(response)
@@ -19,15 +19,17 @@ const SingelCategory = (props: { category: Category }) => {
   }
 
   return (
-    <tr>
-    <td className="product__name">{category.categoryName}</td>
-    <td className="product__description">{category.categoryDescription}</td>
-    <td>
-      <button>Edit</button>
-      <button onClick={() => handleDelete(category.categoryId)}>Delete</button>
-    </td>
-  </tr>
+    <Table.Row className="table-row">
+      <Table.Cell className="table-cell">{category.categoryName}</Table.Cell>
+      <Table.Cell className="table-cell">{category.categoryDescription}</Table.Cell>
+      <Table.Cell className="table-cell">
+        <div className="button__container">
+          <button className="button__edit"><MdEditSquare size={13} /></button>
+          <button className="button__delete" onClick={() => handleDelete(category.categoryId)}><MdDeleteForever size={13} /></button>
+        </div>
+      </Table.Cell>
+    </Table.Row>
   )
 }
 
-export default SingelCategory
+export default SingleCategory

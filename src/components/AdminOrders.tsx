@@ -1,10 +1,10 @@
 import AdminSidebar from "@/components/AdminSidebar"
 
-export const AdminProducts  = () => {
+export const AdminOrders = () => {
   return (
     <div className="container">
         <AdminSidebar />
-      <div className="content">Products content here</div>
+      <div className="content">Orders content here</div>
     </div>
   )
 }

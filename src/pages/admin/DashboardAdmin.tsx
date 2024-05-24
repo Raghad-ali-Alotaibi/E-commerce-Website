@@ -3,7 +3,7 @@ import AdminSidebar from "@/components/AdminSidebar"
 export const DashboardAdmin = () => {
   return (
     <div>
-      <AdminSidebar />
+      <AdminSidebar/>
     </div>
   )
 }

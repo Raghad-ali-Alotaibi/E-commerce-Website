@@ -8,10 +8,10 @@ const SingelUser = (props: { user: User }) => {
 
   const dispatch: AppDispatch = useDispatch()
 
-  const handleDelete = async (id: number) => {
-    dispatch(deleteCategories(id))
+  const handleDelete = async (userId: number) => {
+    dispatch(deleteCategories(userId))
     try {
-      const response = await dispatch(deleteCategories(id))
+      const response = await dispatch(deleteCategories(userId))
       console.log(response)
     } catch (error) {
       console.log(error)
