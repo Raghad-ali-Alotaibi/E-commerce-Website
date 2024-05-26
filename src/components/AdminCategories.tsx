@@ -2,24 +2,34 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Table } from "flowbite-react"
 
-import { AppDispatch, RootState } from "@/tookit/store"
-import { CreateCategories, fetchCategories } from "@/tookit/slices/CategorySlice"
+import { AppDispatch } from "@/tookit/store"
+import {
+  CreateCategory,
+  UpdateCategory,
+  deleteCategory,
+  fetchCategories
+} from "@/tookit/slices/CategorySlice"
 import AdminSidebar from "@/components/AdminSidebar"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { CreateFormData } from "@/types"
-import SingleCategory from "./SingelCategory"
+import { Category, CreateFormData } from "@/types"
+import { MdDeleteForever, MdEditSquare } from "react-icons/md"
+import useCategoriesState from "@/hooks/useCategoriesState"
 
-const AdminCategories = () => {
-  const { categories, isLoading, error } = useSelector((state: RootState) => state.categoryR)
+export const AdminCategories = () => {
+  const { categories, isLoading, error } = useCategoriesState()
 
   const dispatch: AppDispatch = useDispatch()
+
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
     formState: { errors }
   } = useForm<CreateFormData>()
 
   const [isEdit, setIsEdit] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,10 +37,38 @@ const AdminCategories = () => {
     }
     fetchData()
   }, [])
+
   // need fix
   const onSubmit: SubmitHandler<CreateFormData> = async (data) => {
     try {
-      const response = await dispatch(CreateCategories(data))
+      if (isEdit) {
+        if (selectedCategoryId !== null) {
+          await dispatch(
+            UpdateCategory({ updateCategoryData: data, categoryId: selectedCategoryId })
+          )
+          setIsEdit(false)
+        } else {
+          console.error("selectedCategoryId is null")
+        }
+      } else {
+        await dispatch(CreateCategory(data))
+      }
+      reset()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleEdit = async (category: Category) => {
+    setIsEdit(true)
+    setValue("categoryName", category.categoryName)
+    setSelectedCategoryId(category.categoryId)
+    setValue("categoryDescription", category.categoryDescription)
+  }
+
+  const handleDelete = async (categoryId: number) => {
+    try {
+      const response = await dispatch(deleteCategory(categoryId))
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -41,10 +79,10 @@ const AdminCategories = () => {
     <div className="container">
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
-        <AdminSidebar />
+      <AdminSidebar />
       <div className="content">
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="form-title">Create Category</h2>
+          <h2 className="form-title">{isEdit ? "Edit Category" : "Create Category"}</h2>
           <div className="input-container">
             <input
               type="text"
@@ -80,9 +118,8 @@ const AdminCategories = () => {
               <span className="error-message">{errors.categoryDescription.message}</span>
             )}
           </div>
-          <button type="submit" className="submit">
-            Create
-          </button>
+
+          <button type="submit">{isEdit ? "Update" : "Create"}</button>
         </form>
 
         <Table>
@@ -93,7 +130,23 @@ const AdminCategories = () => {
           </Table.Head>
           <Table.Body>
             {categories.map((category) => (
-              <SingleCategory key={category.categoryId} category={category} />
+              <Table.Row className="table-row" key={category.categoryId}>
+                <Table.Cell className="table-cell">{category.categoryName}</Table.Cell>
+                <Table.Cell className="table-cell">{category.categoryDescription}</Table.Cell>
+                <Table.Cell className="table-cell">
+                  <div className="button__container">
+                    <button className="button__edit" onClick={() => handleEdit(category)}>
+                      <MdEditSquare size={13} />
+                    </button>
+                    <button
+                      className="button__delete"
+                      onClick={() => handleDelete(category.categoryId)}
+                    >
+                      <MdDeleteForever size={13} />
+                    </button>
+                  </div>
+                </Table.Cell>
+              </Table.Row>
             ))}
           </Table.Body>
         </Table>
@@ -101,4 +154,3 @@ const AdminCategories = () => {
     </div>
   )
 }
-export default AdminCategories

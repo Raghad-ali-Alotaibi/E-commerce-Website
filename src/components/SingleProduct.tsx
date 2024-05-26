@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom"
 
 import { Product } from "@/types"
+import { AppDispatch } from "@/tookit/store"
+import { useDispatch } from "react-redux"
+import { addToCart } from "@/tookit/slices/CartSlice"
 
 const SingleProduct = (props: { product: Product }) => {
   const { product } = props
+  const dispatch: AppDispatch = useDispatch()
+
+  const handleAddToCart =(product: Product)=>{
+    dispatch(addToCart(product))
+  }
+
 
   return (
     <div className="product__card">
@@ -20,7 +29,8 @@ const SingleProduct = (props: { product: Product }) => {
         </p>
         <p>Quantity: {product.productQuantityInStock}</p>
         <div className="button-container">
-          <button className="product__button">
+          <button className="product__button" onClick={()=>
+            handleAddToCart(product)}>
             Add to cart<i className="fa-solid fa-cart-shopping" aria-hidden="true"></i>
           </button>
           <Link to={`/products/slug/${product.productSlug}`}>

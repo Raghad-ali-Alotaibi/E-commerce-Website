@@ -16,32 +16,49 @@ export const fetchCategories = createAsyncThunk("categories/fetchCategories", as
   return response.data
 })
 
-
-// need fix
-export const CreateCategories = createAsyncThunk(
-  "categories/CreateCategories",
+export const CreateCategory = createAsyncThunk(
+  "categories/CreateCategory",
   async (newCategory: CreateFormData) => {
     const response = await api.post("/categories", newCategory, {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
-    });
-    return response.data;
+    })
+    return response.data.data
   }
-);
+)
 
-// need fix
-export const deleteCategories = createAsyncThunk(
-  "categories/deleteCategories",
+export const UpdateCategory = createAsyncThunk(
+  "categories/UpdateCategory",
+  async ({
+    updateCategoryData,
+    categoryId
+  }: {
+    updateCategoryData: CreateFormData
+    categoryId: number
+  }) => {
+    const response = await api.put(`/categories/${categoryId}`, updateCategoryData, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    console.log(response.data)
+
+    return response.data
+  }
+)
+
+export const deleteCategory = createAsyncThunk(
+  "categories/deleteCategory",
   async (categoryId: number) => {
     await api.delete(`/categories/${categoryId}`, {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
-    });
+    })
     return categoryId
   }
-);
+)
 
 // cases : pending , fulfilled , rejected
 const CategoryReducer = createSlice({
@@ -54,12 +71,24 @@ const CategoryReducer = createSlice({
         state.categories = action.payload.data
         state.isLoading = false
       })
-      .addCase(deleteCategories.fulfilled, (state, action) => {
+      .addCase(deleteCategory.fulfilled, (state, action) => {
         state.categories = state.categories.filter(
-          (category) => category.categoryId !== action.payload)
+          (category) => category.categoryId !== action.payload
+        )
+        state.isLoading = false
       })
-      .addCase(CreateCategories.fulfilled, (state, action) => {
+      .addCase(CreateCategory.fulfilled, (state, action) => {
         state.categories.push(action.payload)
+        state.isLoading = false
+      })
+      .addCase(UpdateCategory.fulfilled, (state, action) => {
+        const FindCategory = state.categories.find(
+          (category) => category.categoryId === action.payload.data.categoryId
+        )
+        if (FindCategory) {
+          FindCategory.categoryName = action.payload.data.categoryName
+          FindCategory.categoryDescription = action.payload.data.categoryDescription
+        }
       })
       .addMatcher(
         (action) => action.type.endsWith("/pending"),

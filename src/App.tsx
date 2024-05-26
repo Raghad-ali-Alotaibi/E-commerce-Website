@@ -16,12 +16,13 @@ import {
   UserProfile,
   AdminProducts,
   AdminUserManagement,
-  AdminOrders
+  AdminOrders,
+  Cart,
+  AdminCategories
 } from "@/pages/Pages"
 import "./App.css"
 import AdminRoute from "./Routers/AdminRoute"
 import UserRoute from "./Routers/UserRoute"
-import AdminCategories from "./components/AdminCategories"
 
 function App() {
   return (
@@ -32,8 +33,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products/slug/:productSlug" element={<ProductDetails />} />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<Cart />} />
+
 
           <Route path="/dashboard" element={<UserRoute />}>
             <Route path="user" element={<DashboardUser />} />

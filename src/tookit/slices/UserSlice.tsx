@@ -10,7 +10,6 @@ const data = getLocalStorage("loginData", {
   isLoggedIn: false
 })
 
-
 const initialState: UserState = {
   users: [],
   error: null,
@@ -21,10 +20,11 @@ const initialState: UserState = {
 }
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await api.get(`/users`,{
+  const response = await api.get(`/users`, {
     headers: {
-        Authorization: `Bearer ${getToken()}`
-    }})
+      Authorization: `Bearer ${getToken()}`
+    }
+  })
   return response.data
 })
 
@@ -38,23 +38,19 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: Lo
   return response.data
 })
 
-// need fix
 export const UpdateUser = createAsyncThunk(
   "users/UpdateUser",
-  async ({ updateUserData, userId }: { updateUserData: UpdateFormData , userId: number }) => {
-    console.log(getToken)
-    const response = await api.put(`/users/${userId}`, updateUserData,{
+  async ({ updateUserData, userId }: { updateUserData: UpdateFormData; userId: number }) => {
+    const response = await api.put(`/users/${userId}`, updateUserData, {
       headers: {
         Authorization: `Bearer ${getToken()}`
       }
     })
-      return response.data
+    return response.data
   }
 )
 
-
-// need fix
-export const deleteUser = createAsyncThunk("categories/deleteUser", async (userId: number) => {
+export const deleteUser = createAsyncThunk("users/deleteUser", async (userId: number) => {
   await api.delete(`/users/${userId}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`
@@ -80,17 +76,18 @@ const UserReducer = createSlice({
     }
   },
   extraReducers(builder) {
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.isLoggedIn = true
-      state.userData = action.payload.data.userDto
-      state.token = action.payload.data.jwt
-      setLocalStorage("loginData", {
-        userData: state.userData,
-        token: state.token,
-        isLoggedIn: state.isLoggedIn
+    builder
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoggedIn = true
+        state.userData = action.payload.data.userDto
+        state.token = action.payload.data.jwt
+        setLocalStorage("loginData", {
+          userData: state.userData,
+          token: state.token,
+          isLoggedIn: state.isLoggedIn
+        })
       })
-    })
-    .addCase(UpdateUser.fulfilled, (state, action) => {
+      .addCase(UpdateUser.fulfilled, (state, action) => {
         if (state.userData) {
           state.userData.firstName = action.payload.data.userDto.firstName
           state.userData.lastName = action.payload.data.userDto.lastName
@@ -106,7 +103,6 @@ const UserReducer = createSlice({
         state.token = action.payload.data.jwt
         state.isLoading = false
       })
-
       .addMatcher(
         (action) => action.type.endsWith("/pending"),
         (state) => {

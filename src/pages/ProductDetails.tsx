@@ -5,16 +5,21 @@ import { useParams } from "react-router-dom"
 import PageTitle from "@/components/PageTitle"
 import { fetchProductBySlug } from "@/tookit/slices/ProductSlice"
 import { AppDispatch } from "@/tookit/store"
-import QuantitySelectorButton from "@/components/QuantitySelectorButton"
 import { Horizontal } from "@/components/Horizontal"
 import useProductState from "@/hooks/useProductState"
+import { Product } from "@/types"
+import { addToCart } from "@/tookit/slices/CartSlice"
 
 export const ProductDetails = () => {
   const { productSlug } = useParams<{ productSlug: string }>()
 
-  const { product, isLoading, error} = useProductState();
+  const { product, isLoading, error } = useProductState()
 
   const dispatch: AppDispatch = useDispatch()
+
+  const handleAddToCart =(product: Product)=>{
+    dispatch(addToCart(product))
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,10 +53,14 @@ export const ProductDetails = () => {
             <Horizontal />
             <p className="product-details__description">{product.productDescription}</p>
             <Horizontal />
-            <QuantitySelectorButton />
+            <div className="product-details__quantity">
+              In stock: {product.productQuantityInStock}
+            </div>
             <Horizontal />
             <div>
-              <button className="product-details__cart">Add to cart</button>
+              <button className="product-details__cart" onClick={() => handleAddToCart(product)}>
+                Add to cart<i className="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
         </div>

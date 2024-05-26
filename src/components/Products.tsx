@@ -129,6 +129,7 @@ const Products = () => {
           products.length > 0 &&
           products.map((product) => <SingleProduct key={product.productSlug} product={product} />)}
       </section>
+      
       <div className="pagination">
         <button
           className="button__pagination"

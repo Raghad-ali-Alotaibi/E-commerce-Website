@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { ProductState } from "@/types"
+import { CreateProductForBackend, CreateProductFormData, Product, ProductState } from "@/types"
 import api from "@/api"
+import { getToken } from "@/utils/localStorage"
 
 const initialState: ProductState = {
   products: [],
@@ -19,22 +20,21 @@ export const fetchProducts = createAsyncThunk(
     sortBy,
     selectedCategories
   }: {
-    pageNumber: number;
-    pageSize: number;
-    sortBy: string;
-    selectedCategories: number[];
+    pageNumber: number
+    pageSize: number
+    sortBy: string
+    selectedCategories: number[]
   }) => {
-    let url = `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`;
-    
-    if (selectedCategories.length > 0) {
-      const categoryQueryString = selectedCategories.map(catId => `categoryId=${catId}`).join('&');
-      url += `&${categoryQueryString}`;
-    }
-    const response = await api.get(url);
-    return response.data;
-  }
-);
+    let url = `/products?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`
 
+    if (selectedCategories.length > 0) {
+      const categoryQueryString = selectedCategories.map((catId) => `categoryId=${catId}`).join("&")
+      url += `&${categoryQueryString}`
+    }
+    const response = await api.get(url)
+    return response.data
+  }
+)
 
 export const searchProducts = createAsyncThunk(
   "products/searchProducts",
@@ -51,7 +51,27 @@ export const fetchProductBySlug = createAsyncThunk(
     return response.data
   }
 )
+export const CreateProduct = createAsyncThunk("users/CreateProduct", async (newProduct: CreateProductForBackend) => {
+  const response = await api.post("/products", newProduct , {
+    headers: {
+      Authorization: `Bearer ${getToken()}`
+    }
+  })
+  return response.data
+})
 
+
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (productId: number) => {
+    await api.delete(`/products/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    return productId
+  }
+)
 
 // cases : pending , fulfilled , rejected
 const ProductReducer = createSlice({
@@ -59,33 +79,42 @@ const ProductReducer = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      state.products = action.payload.data.items
-      state.totalPages = action.payload.data.totalPages
-      state.isLoading = false
-    })
-    .addCase(searchProducts.fulfilled, (state, action) => {
-      state.products = action.payload.data
-      state.isLoading = false
-    })
-    .addCase(fetchProductBySlug.fulfilled, (state, action) => {
-      state.product = action.payload.data
-      state.isLoading = false
-    })
-    .addMatcher(
-      (action) => action.type.endsWith("/pending"),
-      (state) => {
-        state.error = null
-        state.isLoading = true
-      }
-    )
-    .addMatcher(
-      (action) => action.type.endsWith("/rejected"),
-      (state, action) => {
-        state.error = "An error occurred"
+    builder
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products = action.payload.data.items
+        state.totalPages = action.payload.data.totalPages
         state.isLoading = false
-      }
-    )
+      })
+      .addCase(searchProducts.fulfilled, (state, action) => {
+        state.products = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(fetchProductBySlug.fulfilled, (state, action) => {
+        state.product = action.payload.data
+        state.isLoading = false
+      })
+      .addCase(CreateProduct.fulfilled, (state, action) => {
+        state.products.push(action.payload)
+        state.isLoading = false
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.products = state.products.filter((product) => product.productId !== action.payload)
+        state.isLoading = false
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/pending"),
+        (state) => {
+          state.error = null
+          state.isLoading = true
+        }
+      )
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.error = "An error occurred"
+          state.isLoading = false
+        }
+      )
   }
 })
 

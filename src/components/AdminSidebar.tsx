@@ -1,8 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { HiUser, HiShoppingBag, HiChartPie } from "react-icons/hi"
-import { MdProductionQuantityLimits } from "react-icons/md";
-import { BiSolidCategoryAlt } from "react-icons/bi";
+import { MdProductionQuantityLimits } from "react-icons/md"
+import { BiSolidCategoryAlt } from "react-icons/bi"
 
 // Define the type for the 'to' prop
 interface SidebarItemProps {
@@ -22,8 +22,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, children }) => {
 
 const AdminSidebar = () => {
   return (
-    <div className="sidebar-container">
-    <div className="sidebar">
+    <aside className="sidebar-container">
+      <div className="sidebar">
         <SidebarItem to="#" icon={<HiChartPie size={25} />}>
           Dashboard
         </SidebarItem>
@@ -31,7 +31,7 @@ const AdminSidebar = () => {
 
       <div className="sidebar">
         <SidebarItem to="/dashboard/admin/categories" icon={<BiSolidCategoryAlt size={25} />}>
-        Categories
+          Categories
         </SidebarItem>
       </div>
 
@@ -52,7 +52,7 @@ const AdminSidebar = () => {
           Orders
         </SidebarItem>
       </div>
-      </div>
+    </aside>
   )
 }
 export default AdminSidebar

@@ -1,5 +1,6 @@
-import { RootState } from "@/tookit/store"
 import { useSelector } from "react-redux"
+
+import { RootState } from "@/tookit/store"
 
 const useCategoriesState = () => {
   const { categories, isLoading, error, category } = useSelector(

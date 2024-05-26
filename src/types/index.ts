@@ -1,10 +1,10 @@
 export type Product = {
   productId: number
   productName: string
-  productSlug: string
+  productSlug?: string
   productDescription: string
   productPrice: number
-  productImage: string
+  productImage?: string
   productQuantityInStock: number
   categoryId: number
   categories: Category[]
@@ -17,9 +17,27 @@ export type ProductState = {
   error: null | string
   isLoading: boolean
 }
+export type CreateProductFormData = {
+  productName: string
+  productDescription: string
+  productPrice: number
+  productImage: FileList
+  productQuantityInStock: number
+  categoryId: number
+  categories: Category[]
+}
+export type CreateProductForBackend = {
+  productName: string
+  productDescription: string
+  productPrice: number
+  productImage: string
+  productQuantityInStock: number
+  categoryId: number
+  categories: Category[]
+}
 
 export type User = {
-  userId: number 
+  userId: number
   firstName: string
   lastName: string
   email: string
@@ -34,7 +52,7 @@ export type UserState = {
   error: null | string
   isLoading: boolean
   isLoggedIn: boolean
-  userData: User | null
+  userData: User 
   token: null | string
 }
 
@@ -81,4 +99,10 @@ export type CategoryStates = {
 export type CreateFormData = {
   categoryName: string
   categoryDescription: string
+}
+
+export type CartItem = Product & { orderQuantity: number }
+
+export type CartState = {
+  cartItems: CartItem[]
 }
