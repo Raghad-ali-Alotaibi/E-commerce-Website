@@ -22,7 +22,7 @@ const UserSidebar = () => {
   return (
     <div className="sidebar-container">
       <div className="sidebar">
-        <SidebarItem to="#" icon={<HiChartPie size={25} />}>
+        <SidebarItem to="/dashboard/user" icon={<HiChartPie size={25} />}>
           Dashboard
         </SidebarItem>
       </div>

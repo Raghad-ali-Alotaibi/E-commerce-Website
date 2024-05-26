@@ -114,7 +114,7 @@ export const AdminProducts = () => {
   }
 
   return (
-    <div className="container">
+    <div className="wrap">
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
       <AdminSidebar />

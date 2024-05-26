@@ -1,4 +1,4 @@
-import { LoginFormData, UpdateFormData, User, UserState } from "@/types"
+import { LoginFormData, UpdateUserFormData, User, UserState } from "@/types"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import api from "@/api"
@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: Lo
 
 export const UpdateUser = createAsyncThunk(
   "users/UpdateUser",
-  async ({ updateUserData, userId }: { updateUserData: UpdateFormData; userId: number }) => {
+  async ({ updateUserData, userId }: { updateUserData: UpdateUserFormData; userId: number }) => {
     const response = await api.put(`/users/${userId}`, updateUserData, {
       headers: {
         Authorization: `Bearer ${getToken()}`

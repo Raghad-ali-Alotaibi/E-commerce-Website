@@ -21,7 +21,6 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       const response = await dispatch(loginUser(data))
-      console.log(response)
       const isAdmin = response.payload.data.userDto.isAdmin
       navigate(isAdmin ? "/dashboard/admin" : "/dashboard/user")
     } catch (error) {

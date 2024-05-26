@@ -52,7 +52,7 @@ export type UserState = {
   error: null | string
   isLoading: boolean
   isLoggedIn: boolean
-  userData: User 
+  userData: User
   token: null | string
 }
 
@@ -64,10 +64,12 @@ export type RegisterFormData = {
   mobile: string
 }
 
-export type UpdateFormData = {
+export type UpdateUserFormData = {
+  userId: number; 
   firstName: string
   lastName: string
 }
+
 
 export type LoginFormData = {
   email: string

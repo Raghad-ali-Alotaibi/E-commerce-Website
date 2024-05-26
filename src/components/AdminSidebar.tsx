@@ -24,7 +24,7 @@ const AdminSidebar = () => {
   return (
     <aside className="sidebar-container">
       <div className="sidebar">
-        <SidebarItem to="#" icon={<HiChartPie size={25} />}>
+        <SidebarItem to="/dashboard/admin" icon={<HiChartPie size={25} />}>
           Dashboard
         </SidebarItem>
       </div>

@@ -721,11 +721,11 @@ span {
   height: 80vh;
 }
 .dashboard__container {
-  margin-left: 20px;
+  margin-left: 1.25rem;
   min-height: 70vh;
 }
 .sidebar-container {
-  width: 240px;
+  width: 15rem;
   float: left;
   height: 80vh;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
@@ -772,7 +772,7 @@ span {
   font-size: large;
   font-weight: 700;
   color: #99a297;
-  padding-bottom: 1rem;
+  padding-bottom: 0.8rem;
 }
 .dashboard__content p {
   padding-left: 5rem;
@@ -797,7 +797,7 @@ span {
   border-radius: 1rem;
   background: #f4f4f4;
 }
-.dashboard__content .btn{
+.dashboard__content .btn {
   width: 100%;
   padding: 0.625rem;
   background-color: #7c9477;
@@ -810,16 +810,41 @@ span {
   background-color: #60735c;
   color: white;
 }
-.dashboard__content .btn__close{
+.dashboard__content .btn__close {
   margin-top: 0.5rem;
-  padding: 9px 16px;
+  padding: 0.563rem 1rem;
   font-size: small;
-  background-color:#b1ada2;
+  background-color: #b1ada2;
   border-radius: 0.313rem;
 }
 /* Dashboard User end */
 
+/* Dashboard Admin start */
+.wrap {
+  height: 80vh;
+}
+.dashboard__container {
+  margin-left: 1.25rem;
+  min-height: 70vh;
+}
+.dashboard__container h1 {
+  font-size: large;
+  font-weight: 700;
+  padding-top: 12rem;
+  padding-bottom: 1rem;
+  color: #555a54;
+  font-size: 1.5rem;
+}
+.dashboardA__content {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
+  padding-left: 2rem;
+}
 /* Table start */
+.table{
+  margin-left: 27rem;
+}
 .table-head-cell {
   font-weight: bold;
   padding: 1rem;
@@ -873,6 +898,7 @@ span {
   background: #894141;
 }
 /* Table end */
+/* Dashboard dAdmin end */
 
 /* Responsive Screens */
 @media (min-width: 768px) {

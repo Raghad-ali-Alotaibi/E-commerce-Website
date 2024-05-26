@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 
 import UserSidebar from "@/components/UserSidebar"
 import useUserState from "@/hooks/useUserState"
-import { UpdateFormData } from "@/types"
+import { UpdateUserFormData } from "@/types"
 import { AppDispatch } from "@/tookit/store"
 import { toastError } from "@/components/Notifications "
 import { UpdateUser } from "@/tookit/slices/UserSlice"
@@ -17,11 +17,11 @@ export const UserProfile = () => {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<UpdateFormData>()
+  } = useForm<UpdateUserFormData>()
 
   const [isFormOpen, setIsFormOpen] = useState(false)
 
-  const onSubmit: SubmitHandler<UpdateFormData> = async (data) => {
+  const onSubmit: SubmitHandler<UpdateUserFormData> = async (data) => {
     if (!userData?.userId) {
       toastError("user data is not available")
       return
