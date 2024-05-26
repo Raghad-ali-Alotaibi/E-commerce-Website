@@ -32,12 +32,6 @@ const UserSidebar = () => {
           Profile
         </SidebarItem>
       </div>
-
-      <div className="sidebar">
-        <SidebarItem to="/dashboard/user/orders" icon={<HiShoppingBag size={25} />}>
-          Orders
-        </SidebarItem>
-      </div>
     </div>
   )
 }

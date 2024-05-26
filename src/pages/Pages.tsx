@@ -11,6 +11,5 @@ export {AdminProducts} from "../components/AdminProducts"
 export {AdminCategories} from "../components/AdminCategories"
 export {DashboardUser} from "./user/DashboardUser"
 export {UserProfile} from "./user/UserProfile"
-export {UserOrders} from "./user/UserOrders"
 
 

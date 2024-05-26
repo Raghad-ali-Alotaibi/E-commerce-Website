@@ -1,5 +1,6 @@
 * {
   font-family: "Lora", serif;
+  font-family: "Freeman", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   margin: 0;
@@ -41,7 +42,7 @@
   gap: 1rem;
 }
 .nav__cart {
-  padding-left:60rem ;
+  padding-left: 60rem;
 }
 .menu__container {
   position: relative;
@@ -178,7 +179,7 @@
 .card__center {
   justify-self: center;
 }
-.card__right{
+.card__right {
   justify-self: center;
 }
 .card__end {
@@ -226,7 +227,7 @@
 .ckeckout:hover {
   background-color: #60735c;
 }
-.fa-arrow-left{
+.fa-arrow-left {
   margin-right: 0.5rem;
 }
 .cart__empty {
@@ -715,8 +716,108 @@ span {
 }
 /* Register and Login end */
 
-/* User Sidebar start */
-
+/* Dashboard User start */
+.wrap {
+  height: 80vh;
+}
+.dashboard__container {
+  margin-left: 20px;
+  min-height: 70vh;
+}
+.sidebar-container {
+  width: 240px;
+  float: left;
+  height: 80vh;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+.sidebar-container .sidebar {
+  margin-bottom: 1rem;
+}
+.sidebar-container .sidebar-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+.sidebar-container .sidebar-item:hover {
+  background-color: #f0f0f0;
+}
+.sidebar-container .sidebar-icon {
+  margin-right: 0.5rem;
+  color: #465244;
+}
+.sidebar-container .sidebar-text {
+  font-size: medium;
+  font-weight: 600;
+  color: #bfbbaf;
+}
+.dashboard__content {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
+  padding-left: 2rem;
+}
+.dashboard__content h1 {
+  font-size: large;
+  font-weight: 700;
+  padding-top: 12rem;
+  padding-bottom: 1rem;
+  color: #555a54;
+  font-size: 1.5rem;
+}
+.dashboard__content h2 {
+  font-size: large;
+  font-weight: 700;
+  color: #99a297;
+  padding-bottom: 1rem;
+}
+.dashboard__content p {
+  padding-left: 5rem;
+  color: #4f5f4c;
+  padding-top: 0.9rem;
+}
+.dashboard__content form {
+  width: 20%;
+  margin-top: 1rem;
+  margin-left: 42.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  padding: 2rem;
+}
+.dashboard__content input {
+  border: none;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f4f4f4;
+}
+.dashboard__content .btn{
+  width: 100%;
+  padding: 0.625rem;
+  background-color: #7c9477;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.313rem;
+  cursor: pointer;
+}
+.dashboard__content .btn:hover {
+  background-color: #60735c;
+  color: white;
+}
+.dashboard__content .btn__close{
+  margin-top: 0.5rem;
+  padding: 9px 16px;
+  font-size: small;
+  background-color:#b1ada2;
+  border-radius: 0.313rem;
+}
+/* Dashboard User end */
 
 /* Table start */
 .table-head-cell {

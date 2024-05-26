@@ -37,59 +37,60 @@ export const UserProfile = () => {
   }
 
   return (
-    <div>
+    <div className="wrap">
       <UserSidebar />
-      <div className="main__container" >
+      <div className="dashboard__container">
         {userData && (
-          <>
+          <div className="dashboard__content">
             <p className="">First Name: {userData.firstName}</p>
             <p className="">Last Name: {userData.lastName}</p>
-            <p className="">Email: {userData.email}</p>
-            <button
+            <button className="btn__close"
               onClick={() => {
                 setIsFormOpen(!isFormOpen)
               }}
             >
               {isFormOpen ? "Close " : "Edit"}
             </button>
+            <div></div>
+            <div>
+              {isFormOpen && (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form__field">
+                    <input
+                      type="text"
+                      placeholder="Enter your first name"
+                      {...register("firstName", {
+                        required: "First Name is required",
+                        minLength: {
+                          value: 4,
+                          message: "First Name must be more than 4 characters"
+                        }
+                      })}
+                    />
+                    {errors.firstName && <span>{errors.firstName.message}</span>}
+                  </div>
 
-            {isFormOpen && (
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form__field">
-                  <input
-                    type="text"
-                    placeholder="Enter your first name"
-                    {...register("firstName", {
-                      required: "First Name is required",
-                      minLength: {
-                        value: 4,
-                        message: "First Name must be more than 4 characters"
-                      }
-                    })}
-                  />
-                  {errors.firstName && <span>{errors.firstName.message}</span>}
-                </div>
-
-                <div className="form__field">
-                  <input
-                    type="text"
-                    placeholder="Enter your last name"
-                    {...register("lastName", {
-                      required: "last Name is required",
-                      maxLength: {
-                        value: 30,
-                        message: "Last Name must be less than 30 characters"
-                      }
-                    })}
-                  />
-                  {errors.lastName && <span>{errors.lastName.message}</span>}
-                </div>
-                <button type="submit" className="button__register">
-                  Update
-                </button>
-              </form>
-            )}
-          </>
+                  <div className="form__field">
+                    <input
+                      type="text"
+                      placeholder="Enter your last name"
+                      {...register("lastName", {
+                        required: "last Name is required",
+                        maxLength: {
+                          value: 30,
+                          message: "Last Name must be less than 30 characters"
+                        }
+                      })}
+                    />
+                    {errors.lastName && <span>{errors.lastName.message}</span>}
+                  </div>
+                  <button type="submit" className="btn">
+                    Update
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -12,7 +12,6 @@ import {
   Error,
   DashboardAdmin,
   DashboardUser,
-  UserOrders,
   UserProfile,
   AdminProducts,
   AdminUserManagement,
@@ -41,7 +40,6 @@ function App() {
           <Route path="/dashboard" element={<UserRoute />}>
             <Route path="user" element={<DashboardUser />} />
             <Route path="user/profile" element={<UserProfile />} />
-            <Route path="user/orders" element={<UserOrders />} />
           </Route>
 
           <Route path="/dashboard" element={<AdminRoute />}>
