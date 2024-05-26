@@ -65,11 +65,10 @@ export type RegisterFormData = {
 }
 
 export type UpdateUserFormData = {
-  userId: number; 
+  userId: number
   firstName: string
   lastName: string
 }
-
 
 export type LoginFormData = {
   email: string
@@ -107,4 +106,22 @@ export type CartItem = Product & { orderQuantity: number }
 
 export type CartState = {
   cartItems: CartItem[]
+}
+
+export type Order = {
+  orderId: number
+  orderDate: string
+  orderStatus: string
+  user: User
+  orderProducts: OrderProduct[]
+}
+export type OrderProduct = {
+  quantity: number
+  product: Product
+}
+export type OrderStates = {
+  orders: Order[]
+  order: Order | null
+  error: string | null
+  isLoading: boolean
 }

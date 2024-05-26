@@ -80,13 +80,13 @@ export const AdminCategories = () => {
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
       <AdminSidebar />
-      <div className="content">
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="form-title">{isEdit ? "Edit Category" : "Create Category"}</h2>
-          <div className="input-container">
+      <div className="dashboardAdmin__container">
+        <div className="form__container">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form__field">
+          <p>{isEdit ? "Edit Category" : "Create Category"}</p>
             <input
               type="text"
-              className="input-field"
               {...register("categoryName", {
                 required: "Category Name is required",
                 maxLength: {
@@ -101,10 +101,9 @@ export const AdminCategories = () => {
             )}
           </div>
 
-          <div className="input-container">
+          <div className="form__field">
             <input
               type="text"
-              className="input-field"
               {...register("categoryDescription", {
                 required: "Description is required",
                 maxLength: {
@@ -118,11 +117,11 @@ export const AdminCategories = () => {
               <span className="error-message">{errors.categoryDescription.message}</span>
             )}
           </div>
-
           <button type="submit">{isEdit ? "Update" : "Create"}</button>
         </form>
+        </div>
 
-        <Table>
+        <Table className="table__categories">
           <Table.Head>
             <Table.HeadCell className="table-head-cell">Name</Table.HeadCell>
             <Table.HeadCell className="table-head-cell">Description</Table.HeadCell>
@@ -150,7 +149,7 @@ export const AdminCategories = () => {
             ))}
           </Table.Body>
         </Table>
-      </div>
+        </div>
     </div>
   )
 }

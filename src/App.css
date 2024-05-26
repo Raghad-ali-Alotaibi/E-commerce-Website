@@ -823,10 +823,6 @@ span {
 .wrap {
   height: 80vh;
 }
-.dashboard__container {
-  margin-left: 1.25rem;
-  min-height: 70vh;
-}
 .dashboard__container h1 {
   font-size: large;
   font-weight: 700;
@@ -835,15 +831,76 @@ span {
   color: #555a54;
   font-size: 1.5rem;
 }
-.dashboardA__content {
+.dashboardAdmin__container {
+  margin-left: 1rem;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: row;
+}
+.dashboard__content {
   text-align: center;
   padding-top: 2rem;
   padding-bottom: 5rem;
   padding-left: 2rem;
 }
+.form__container{
+  width: 80%;
+  height: 80vh;
+  padding: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 6rem;
+  padding-right: 5rem;
+  padding-bottom: 2rem;
+}
+.form__container p{
+  color: #4f5f4c;
+  padding-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+.form__container form{
+  padding: 4rem;
+  width: 100%;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); 
+}
+.form__container input{
+  border: none;
+  font-size: small;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+  background: #f4f4f4;
+}
+.form__container button{
+  width: 100%;
+  padding: 0.625rem;
+  background-color: #7c9477;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.313rem;
+  cursor: pointer;
+}
+.form__container button:hover {
+  background-color: #60735c;
+  color: white;
+}
+
 /* Table start */
 .table{
-  margin-left: 27rem;
+  margin-left: 30rem;
+  font-size: small;
+}
+.table__categories{
+  width: 80%;
+  height: 7vh;
+  padding-bottom: 1rem;
+  margin-left: 8rem;
+  font-size: small;
+}
+.table__orders{
+  margin-left: 28rem;
+  width: 55%;
+  font-size: small;
 }
 .table-head-cell {
   font-weight: bold;

@@ -42,8 +42,8 @@ export const UserProfile = () => {
       <div className="dashboard__container">
         {userData && (
           <div className="dashboard__content">
-            <p className="">First Name: {userData.firstName}</p>
-            <p className="">Last Name: {userData.lastName}</p>
+            <p>First Name: {userData.firstName}</p>
+            <p>Email: {userData.email}</p>
             <button className="btn__close"
               onClick={() => {
                 setIsFormOpen(!isFormOpen)
@@ -51,7 +51,6 @@ export const UserProfile = () => {
             >
               {isFormOpen ? "Close " : "Edit"}
             </button>
-            <div></div>
             <div>
               {isFormOpen && (
                 <form onSubmit={handleSubmit(onSubmit)}>

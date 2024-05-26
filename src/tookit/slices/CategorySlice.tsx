@@ -42,11 +42,10 @@ export const UpdateCategory = createAsyncThunk(
         Authorization: `Bearer ${getToken()}`
       }
     })
-    console.log(response.data)
-
     return response.data
   }
 )
+
 
 export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
@@ -108,3 +107,5 @@ const CategoryReducer = createSlice({
 })
 
 export default CategoryReducer.reducer
+
+
