@@ -14,6 +14,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { Category, CreateFormData } from "@/types"
 import { MdDeleteForever, MdEditSquare } from "react-icons/md"
 import useCategoriesState from "@/hooks/useCategoriesState"
+import { toastError } from "./Notifications "
 
 export const AdminCategories = () => {
   const { categories, isLoading, error } = useCategoriesState()
@@ -38,7 +39,6 @@ export const AdminCategories = () => {
     fetchData()
   }, [])
 
-  // need fix
   const onSubmit: SubmitHandler<CreateFormData> = async (data) => {
     try {
       if (isEdit) {
@@ -48,14 +48,14 @@ export const AdminCategories = () => {
           )
           setIsEdit(false)
         } else {
-          console.error("selectedCategoryId is null")
+          toastError("selectedCategoryId is null")
         }
       } else {
         await dispatch(CreateCategory(data))
       }
       reset()
     } catch (error) {
-      console.log(error)
+      toastError("Create category failed")
     }
   }
 
@@ -71,7 +71,7 @@ export const AdminCategories = () => {
       const response = await dispatch(deleteCategory(categoryId))
       console.log(response)
     } catch (error) {
-      console.log(error)
+      toastError("Delete category failed")
     }
   }
 
