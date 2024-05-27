@@ -12,7 +12,12 @@ const SingleProduct = (props: { product: Product }) => {
   const handleAddToCart =(product: Product)=>{
     dispatch(addToCart(product))
   }
-
+  const formatPrice = (amount: number ) => {
+    return amount.toLocaleString("en-us", {
+      style: "currency",
+      currency: "USD"
+    })
+  }
 
   return (
     <div className="product__card">
@@ -22,10 +27,7 @@ const SingleProduct = (props: { product: Product }) => {
       <div className="product__content">
         <h2 className="product__name">{product.productName}</h2>
         <p className="product__price">
-          {product.productPrice.toLocaleString("en-us", {
-            style: "currency",
-            currency: "USD"
-          })}
+          {formatPrice(product.productPrice)}
         </p>
         <p>Quantity: {product.productQuantityInStock}</p>
         <div className="button-container">

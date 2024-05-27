@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CreateProductForBackend, CreateProductFormData, Product, ProductState } from "@/types"
+import { CreateProductForBackend, Product, ProductState } from "@/types"
 import api from "@/api"
 import { getToken } from "@/utils/localStorage"
 
@@ -57,9 +57,28 @@ export const CreateProduct = createAsyncThunk("users/CreateProduct", async (newP
       Authorization: `Bearer ${getToken()}`
     }
   })
+  console.log(response.data)
   return response.data
 })
 
+export const UpdateProduct = createAsyncThunk(
+  "products/UpdateProduct",
+  async ({
+    updateProductData,
+    productId
+  }: {
+    updateProductData: CreateProductForBackend
+    productId: number
+  }) => {
+    const response = await api.put(`/products/${productId}`, updateProductData, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    console.log(response.data)
+    return response.data
+  }
+)
 
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
@@ -100,6 +119,20 @@ const ProductReducer = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter((product) => product.productId !== action.payload)
         state.isLoading = false
+      })
+      .addCase(UpdateProduct.fulfilled, (state, action) => {
+        const FindProduct = state.products.find(
+          (product) => product.productId === action.payload.data.productId
+        )
+        if (FindProduct) {
+          FindProduct.productImage = action.payload.data.productImage
+          FindProduct.productName = action.payload.data.productName
+          FindProduct.productDescription = action.payload.data.productDescription
+          FindProduct.productPrice = action.payload.data.productPrice
+          FindProduct.productQuantityInStock = action.payload.data.productQuantityInStock
+          FindProduct.categoryId = action.payload.data.categoryId
+          state.isLoading = false
+        }
       })
       .addMatcher(
         (action) => action.type.endsWith("/pending"),

@@ -74,6 +74,13 @@ export const AdminCategories = () => {
       toastError("Delete category failed")
     }
   }
+  const truncateDescription = (categoryDescription:string, maxLength = 50) => {
+    if (categoryDescription.length <= maxLength) {
+      return categoryDescription;
+    } else {
+      return `${categoryDescription.slice(0, maxLength)}...`;
+    }
+  };
 
   return (
     <div className="wrap">
@@ -131,7 +138,7 @@ export const AdminCategories = () => {
             {categories.map((category) => (
               <Table.Row className="table-row" key={category.categoryId}>
                 <Table.Cell className="table-cell">{category.categoryName}</Table.Cell>
-                <Table.Cell className="table-cell">{category.categoryDescription}</Table.Cell>
+                <Table.Cell className="table-cell">{truncateDescription(category.categoryDescription)}</Table.Cell>
                 <Table.Cell className="table-cell">
                   <div className="button__container">
                     <button className="button__edit" onClick={() => handleEdit(category)}>

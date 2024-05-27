@@ -3,14 +3,13 @@ import { useDispatch } from "react-redux"
 import { Table } from "flowbite-react"
 
 import { AppDispatch } from "@/tookit/store"
-import { CreateCategory, UpdateCategory, fetchCategories } from "@/tookit/slices/CategorySlice"
 import AdminSidebar from "@/components/AdminSidebar"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { CreateFormData, CreateProductFormData, Product } from "@/types"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { CreateProductForBackend } from "@/types"
 import { MdDeleteForever, MdEditSquare } from "react-icons/md"
 import useCategoriesState from "@/hooks/useCategoriesState"
 import useProductState from "@/hooks/useProductState"
-import { CreateProduct, deleteProduct, fetchProducts } from "@/tookit/slices/ProductSlice"
+import { CreateProduct, UpdateProduct, deleteProduct, fetchProducts } from "@/tookit/slices/ProductSlice"
 import { toastError } from "./Notifications "
 
 export const AdminProducts = () => {
@@ -18,29 +17,23 @@ export const AdminProducts = () => {
   const { products } = useProductState()
 
   const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(4)
+  const [pageSize, setPageSize] = useState(5)
   const [sortBy, setSortBy] = useState("price")
-  const [searchKeyword, setSearchKeyword] = useState("")
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
-  const dispatch: AppDispatch = useDispatch()
   const [isEdit, setIsEdit] = useState(false)
-  const [imgrPreview, setImgrPreview] = useState<string | null>(null)
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+
+
+  const dispatch: AppDispatch = useDispatch()
 
   const {
     register,
     handleSubmit,
     reset,
     setValue,
-    control,
     formState: { errors }
-  } = useForm<CreateProductFormData>()
+  } = useForm<CreateProductForBackend>()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchCategories())
-    }
-    fetchData()
-  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,178 +42,145 @@ export const AdminProducts = () => {
     fetchData()
   }, [pageNumber, sortBy, selectedCategories])
 
-  // need fix
-  // const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
-  //   try {
-  //     if (isEdit) {
-  //       if (selectedCategoryId !== null) {
-  //         await dispatch(
-  //           UpdateCategory({ updateCategoryData: data, categoryId: selectedCategoryId })
-  //         )
-  //         setIsEdit(false)
-  //       } else {
-  //         console.error("selectedCategoryId is null")
-  //       }
-  //     } else {
-  //       await dispatch(CreateCategory(data))
-  //     }
-  //     reset()
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  const onSubmit: SubmitHandler<CreateProductFormData> = async (data) => {
+  const onSubmit: SubmitHandler<CreateProductForBackend> = async (data) => {
     try {
-      let imageUrl = ""
-      if (data.productImage && data.productImage.length > 0) {
-        const file = data.productImage[0]
-        imageUrl = await uploadImageToCloudinary(file)
+        if (selectedProductId) {
+          await dispatch(
+            UpdateProduct({ updateProductData: data, productId: selectedProductId })
+          )
+          setIsEdit(false);
+      } else {
+        // Handle product creation
+        await dispatch(CreateProduct(data));
       }
-      const productData = {
-        ...data,
-        image: imageUrl
-      }
-      const response = await dispatch(CreateProduct(productData))
+      reset();
     } catch (error) {
-      console.log(error)
-      toastError("product creation failed")
+      toastError("Product operation failed");
     }
   }
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      setImgrPreview(URL.createObjectURL(file))
-    }
-  }
-
-  const handleEdit = async (product: Product) => {
-    setIsEdit(true)
-    setValue("productName", product.productName)
-    setValue("productDescription", product.productDescription)
-    setValue("productPrice", product.productPrice)
-    setValue("productQuantityInStock", product.productQuantityInStock)
-    setValue("categories", product.categories.map((category) => category.categoryId))
-    setImgrPreview(product.productImage)
-  }
+  
+  const handleEdit = async (product: CreateProductForBackend) => {
+    setIsEdit(true);
+    setValue("productName", product.productName);
+    setValue("productDescription", product.productDescription);
+    setValue("productPrice", product.productPrice);
+    setValue("productQuantityInStock", product.productQuantityInStock);
+    setValue("categoryId",product.categoryId);
+  }; 
 
   const handleDelete = async (productId: number) => {
     try {
-      const response = await dispatch(deleteProduct(productId))
-      console.log(response)
+      await dispatch(deleteProduct(productId))
     } catch (error) {
-      console.log(error)
+      toastError("product Delete failed")
     }
   }
+
+  const truncateDescription = (productDescription: string | undefined, maxLength = 50) => {
+    if (!productDescription || productDescription.length <= maxLength) {
+      return productDescription || ''; // Return empty string if productDescription is undefined
+    } else {
+      return `${productDescription.slice(0, maxLength)}...`
+    }
+  }
+  
 
   return (
     <div className="wrap">
       {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
       <AdminSidebar />
-      <div className="content">
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="form-title">{isEdit ? "Edit Product" : "Create Product"}</h2>
-          <div className="input-container">
-            <input
-              type="text"
-              className="input-field"
-              {...register("productName", {
-                required: "Product Name is required",
-                maxLength: {
-                  value: 30,
-                  message: "Product Name must be less than 30 characters"
-                }
-              })}
-              placeholder="Product Name"
-            />
-            {errors.productName && (
-              <span className="error-message">{errors.productName.message}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="text"
-              className="input-field"
-              {...register("productDescription", {
-                required: "Description is required",
-                maxLength: {
-                  value: 30,
-                  message: "Description must be less than 30 characters"
-                }
-              })}
-              placeholder="Product Description"
-            />
-            {errors.productDescription && (
-              <span className="error-message">{errors.productDescription.message}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="number"
-              step="0.01"
-              className="input-field"
-              {...register("productPrice")}
-              placeholder="Product Price"
-            />
-            {errors.productPrice && (
-              <span className="error-message">{errors.productPrice.message}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="number"
-              step="0.01"
-              className="input-field"
-              {...register("productQuantityInStock")}
-              placeholder="Product Quantity In Stock"
-            />
-            {errors.productQuantityInStock && (
-              <span className="error-message">{errors.productQuantityInStock.message}</span>
-            )}
-          </div>
-
-          <div className="input-container">
-            <input
-              type="file"
-              accept="image/*"
-              className="input-field"
-              {...register("productImage")}
-              placeholder="Product Image"
-              onChange={handleImageChange}
-            />
-          </div>
-
-          <div className="input-container">
-            <Controller
-              name="categories"
-              control={control}
-              render={({ field }) => (
-                <select
-                  {...field}
-                  onChange={(e) => {
-                    const selectedOptions = Array.from(e.target.selectedOptions)
-                    const selectedValues = selectedOptions.map((option) => option.value)
-                    field.onChange(selectedValues)
-                  }}
-                >
-                  {categories.map((category) => (
-                    <option key={category.categoryId} value={category.categoryId}>
-                      {category.categoryName}
-                    </option>
-                  ))}
-                </select>
+      <div className="dashboardAdmin__container">
+        <div className="form-container__products">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <p>{isEdit ? "Edit Product" : "Create Product"}</p>
+            <div className="input-container">
+              <input
+                type="text"
+                className="input-field"
+                {...register("productName", {
+                  required: "Product Name is required",
+                  maxLength: {
+                    value: 30,
+                    message: "Product Name must be less than 30 characters"
+                  }
+                })}
+                placeholder="Product name"
+              />
+              {errors.productName && (
+                <span className="error-message">{errors.productName.message}</span>
               )}
-            />
-          </div>
+            </div>
 
-          <button type="submit">{isEdit ? "Update" : "Create"}</button>
-        </form>
+            <div className="input-container">
+              <input
+                type="text"
+                className="input-field"
+                {...register("productDescription", {
+                  required: "Description is required",
+                  maxLength: {
+                    value: 30,
+                    message: "Description must be less than 30 characters"
+                  }
+                })}
+                placeholder="Product description"
+              />
+              {errors.productDescription && (
+                <span className="error-message">{errors.productDescription.message}</span>
+              )}
+            </div>
 
-        <Table>
+            <div className="input-container">
+              <input
+                type="number"
+                step="0.01"
+                className="input-field"
+                {...register("productPrice")}
+                placeholder="Product price"
+              />
+              {errors.productPrice && (
+                <span className="error-message">{errors.productPrice.message}</span>
+              )}
+            </div>
+
+            <div className="input-container">
+              <input
+                type="number"
+                step="0.01"
+                className="input-field"
+                {...register("productQuantityInStock")}
+                placeholder="Product quantity"
+              />
+              {errors.productQuantityInStock && (
+                <span className="error-message">{errors.productQuantityInStock.message}</span>
+              )}
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                className="input-field"
+                {...register("productImage")}
+                placeholder="Product Image URL"
+              />
+            </div>
+
+            <div className="input-container">
+              <input
+                type="number"
+                className="input-field"
+                {...register("categoryId")}
+                placeholder="category Id"
+              />
+              {errors.categoryId && (
+                <span className="error-message">{errors.categoryId.message}</span>
+              )}
+            </div>
+            <button type="submit">{isEdit ? "Update" : "Create"}</button>
+          </form>
+        </div>
+
+        <Table className="table__products">
           <Table.Head>
             <Table.HeadCell className="table-head-cell">Image</Table.HeadCell>
             <Table.HeadCell className="table-head-cell">Name</Table.HeadCell>
@@ -242,9 +202,16 @@ export const AdminProducts = () => {
                 </Table.Cell>
                 <Table.Cell className="table-cell">{product.productName}</Table.Cell>
                 <Table.Cell className="table-cell">
-                  {/* {product.categories.map((category) => category.categoryName).join(", ")} */}
+                  {(() => {
+                    const category = categories.find(
+                      (category) => category.categoryId === product.categoryId
+                    )
+                    return category ? category.categoryName : "Unknown"
+                  })()}
                 </Table.Cell>
-                <Table.Cell className="table-cell">{product.productDescription}</Table.Cell>
+                <Table.Cell className="table-cell">
+                  {truncateDescription(product.productDescription)}
+                </Table.Cell>
                 <Table.Cell className="table-cell">{product.productPrice}</Table.Cell>
                 <Table.Cell className="table-cell">{product.productQuantityInStock}</Table.Cell>
                 <Table.Cell className="table-cell">

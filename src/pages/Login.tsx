@@ -65,7 +65,8 @@ export const Login = () => {
             />
             {errors.password && <span>{errors.password.message}</span>}
           </div>
-          <button className="button__login" type="submit">
+
+          <button type="submit">
             Login
           </button>
         </form>

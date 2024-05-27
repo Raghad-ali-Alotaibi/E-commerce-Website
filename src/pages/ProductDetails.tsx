@@ -17,7 +17,7 @@ export const ProductDetails = () => {
 
   const dispatch: AppDispatch = useDispatch()
 
-  const handleAddToCart =(product: Product)=>{
+  const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product))
   }
 
@@ -27,6 +27,13 @@ export const ProductDetails = () => {
     }
     fetchData()
   }, [])
+
+  const formatPrice = (amount: number) => {
+    return amount.toLocaleString("en-us", {
+      style: "currency",
+      currency: "USD"
+    })
+  }
 
   return (
     <article className="details">
@@ -44,12 +51,7 @@ export const ProductDetails = () => {
           </div>
           <div className="product__right">
             <h3 className="product-details__name">{product.productName}</h3>
-            <p className="product-details__price">
-              {product.productPrice.toLocaleString("en-us", {
-                style: "currency",
-                currency: "USD"
-              })}
-            </p>
+            <p className="product-details__price">{formatPrice(product.productPrice)}</p>
             <Horizontal />
             <p className="product-details__description">{product.productDescription}</p>
             <Horizontal />
