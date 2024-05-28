@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import PageTitle from "@/components/PageTitle"
 import { fetchProductBySlug } from "@/tookit/slices/ProductSlice"
@@ -38,7 +40,14 @@ export const ProductDetails = () => {
   return (
     <article className="details">
       <PageTitle title="Product" />
-      {isLoading && <p>Loading</p>}
+      {isLoading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <span>Loading...</span>
+          </div>
+        </div>
+      )}
       {error && <p>error{error}</p>}
       {product && (
         <div className="product__details">

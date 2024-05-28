@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
 import { AppDispatch } from "@/tookit/store"
@@ -68,7 +70,14 @@ const Products = () => {
 
   return (
     <>
-      {isLoading && <p>Loading</p>}
+      {isLoading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <span>Loading...</span>
+          </div>
+        </div>
+      )}
       {error && <p>error{error}</p>}
       <p className="title__product">Our Products</p>
       <div className="search__container">
@@ -93,7 +102,6 @@ const Products = () => {
           </button>
         </div>
       </div>
-      
       <div className="container">
         <div className="categories__container">
           <p className="title__categories">Filter by categories:</p>
@@ -123,13 +131,11 @@ const Products = () => {
         </div>
       </div>
       <Horizontal />
-
       <section className="products">
         {products &&
           products.length > 0 &&
           products.map((product) => <SingleProduct key={product.productSlug} product={product} />)}
       </section>
-      
       <div className="pagination">
         <button
           className="button__pagination"

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Table } from "flowbite-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { AppDispatch } from "@/tookit/store"
 import AdminSidebar from "@/components/AdminSidebar"
@@ -9,7 +11,12 @@ import { CreateProductForBackend } from "@/types"
 import { MdDeleteForever, MdEditSquare } from "react-icons/md"
 import useCategoriesState from "@/hooks/useCategoriesState"
 import useProductState from "@/hooks/useProductState"
-import { CreateProduct, UpdateProduct, deleteProduct, fetchProducts } from "@/tookit/slices/ProductSlice"
+import {
+  CreateProduct,
+  UpdateProduct,
+  deleteProduct,
+  fetchProducts
+} from "@/tookit/slices/ProductSlice"
 import { toastError } from "./Notifications "
 
 export const AdminProducts = () => {
@@ -21,8 +28,7 @@ export const AdminProducts = () => {
   const [sortBy, setSortBy] = useState("price")
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [isEdit, setIsEdit] = useState(false)
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
-
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -34,7 +40,6 @@ export const AdminProducts = () => {
     formState: { errors }
   } = useForm<CreateProductForBackend>()
 
-
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchProducts({ pageNumber, pageSize, sortBy, selectedCategories }))
@@ -44,29 +49,27 @@ export const AdminProducts = () => {
 
   const onSubmit: SubmitHandler<CreateProductForBackend> = async (data) => {
     try {
-        if (selectedProductId) {
-          await dispatch(
-            UpdateProduct({ updateProductData: data, productId: selectedProductId })
-          )
-          setIsEdit(false);
+      if (selectedProductId) {
+        await dispatch(UpdateProduct({ updateProductData: data, productId: selectedProductId }))
+        setIsEdit(false)
       } else {
         // Handle product creation
-        await dispatch(CreateProduct(data));
+        await dispatch(CreateProduct(data))
       }
-      reset();
+      reset()
     } catch (error) {
-      toastError("Product operation failed");
+      toastError("Product operation failed")
     }
   }
-  
+
   const handleEdit = async (product: CreateProductForBackend) => {
-    setIsEdit(true);
-    setValue("productName", product.productName);
-    setValue("productDescription", product.productDescription);
-    setValue("productPrice", product.productPrice);
-    setValue("productQuantityInStock", product.productQuantityInStock);
-    setValue("categoryId",product.categoryId);
-  }; 
+    setIsEdit(true)
+    setValue("productName", product.productName)
+    setValue("productDescription", product.productDescription)
+    setValue("productPrice", product.productPrice)
+    setValue("productQuantityInStock", product.productQuantityInStock)
+    setValue("categoryId", product.categoryId)
+  }
 
   const handleDelete = async (productId: number) => {
     try {
@@ -78,16 +81,22 @@ export const AdminProducts = () => {
 
   const truncateDescription = (productDescription: string | undefined, maxLength = 50) => {
     if (!productDescription || productDescription.length <= maxLength) {
-      return productDescription || ''; // Return empty string if productDescription is undefined
+      return productDescription || "" // Return empty string if productDescription is undefined
     } else {
       return `${productDescription.slice(0, maxLength)}...`
     }
   }
-  
 
   return (
     <div className="wrap">
-      {isLoading && <p>Loading</p>}
+      {isLoading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <span>Loading...</span>
+          </div>
+        </div>
+      )}
       {error && <p>error{error}</p>}
       <AdminSidebar />
       <div className="dashboardAdmin__container">

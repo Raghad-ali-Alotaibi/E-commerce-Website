@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Table } from "flowbite-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { AppDispatch } from "@/tookit/store"
 import {
@@ -74,58 +76,65 @@ export const AdminCategories = () => {
       toastError("Delete category failed")
     }
   }
-  const truncateDescription = (categoryDescription:string, maxLength = 50) => {
+  const truncateDescription = (categoryDescription: string, maxLength = 50) => {
     if (categoryDescription.length <= maxLength) {
-      return categoryDescription;
+      return categoryDescription
     } else {
-      return `${categoryDescription.slice(0, maxLength)}...`;
+      return `${categoryDescription.slice(0, maxLength)}...`
     }
-  };
+  }
 
   return (
     <div className="wrap">
-      {isLoading && <p>Loading</p>}
+      {isLoading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <span>Loading...</span>
+          </div>
+        </div>
+      )}
       {error && <p>error{error}</p>}
       <AdminSidebar />
       <div className="dashboardAdmin__container">
         <div className="form__container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form__field">
-          <p>{isEdit ? "Edit Category" : "Create Category"}</p>
-            <input
-              type="text"
-              {...register("categoryName", {
-                required: "Category Name is required",
-                maxLength: {
-                  value: 30,
-                  message: "Category Name must be less than 30 characters"
-                }
-              })}
-              placeholder="Category Name"
-            />
-            {errors.categoryName && (
-              <span className="error-message">{errors.categoryName.message}</span>
-            )}
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form__field">
+              <p>{isEdit ? "Edit Category" : "Create Category"}</p>
+              <input
+                type="text"
+                {...register("categoryName", {
+                  required: "Category Name is required",
+                  maxLength: {
+                    value: 30,
+                    message: "Category Name must be less than 30 characters"
+                  }
+                })}
+                placeholder="Category Name"
+              />
+              {errors.categoryName && (
+                <span className="error-message">{errors.categoryName.message}</span>
+              )}
+            </div>
 
-          <div className="form__field">
-            <input
-              type="text"
-              {...register("categoryDescription", {
-                required: "Description is required",
-                maxLength: {
-                  value: 30,
-                  message: "Description must be less than 30 characters"
-                }
-              })}
-              placeholder="Category Description"
-            />
-            {errors.categoryDescription && (
-              <span className="error-message">{errors.categoryDescription.message}</span>
-            )}
-          </div>
-          <button type="submit">{isEdit ? "Update" : "Create"}</button>
-        </form>
+            <div className="form__field">
+              <input
+                type="text"
+                {...register("categoryDescription", {
+                  required: "Description is required",
+                  maxLength: {
+                    value: 30,
+                    message: "Description must be less than 30 characters"
+                  }
+                })}
+                placeholder="Category Description"
+              />
+              {errors.categoryDescription && (
+                <span className="error-message">{errors.categoryDescription.message}</span>
+              )}
+            </div>
+            <button type="submit">{isEdit ? "Update" : "Create"}</button>
+          </form>
         </div>
 
         <Table className="table__categories">
@@ -138,7 +147,9 @@ export const AdminCategories = () => {
             {categories.map((category) => (
               <Table.Row className="table-row" key={category.categoryId}>
                 <Table.Cell className="table-cell">{category.categoryName}</Table.Cell>
-                <Table.Cell className="table-cell">{truncateDescription(category.categoryDescription)}</Table.Cell>
+                <Table.Cell className="table-cell">
+                  {truncateDescription(category.categoryDescription)}
+                </Table.Cell>
                 <Table.Cell className="table-cell">
                   <div className="button__container">
                     <button className="button__edit" onClick={() => handleEdit(category)}>
@@ -156,7 +167,7 @@ export const AdminCategories = () => {
             ))}
           </Table.Body>
         </Table>
-        </div>
+      </div>
     </div>
   )
 }
