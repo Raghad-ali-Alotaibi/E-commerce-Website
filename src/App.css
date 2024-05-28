@@ -22,7 +22,7 @@
 .loading-spinner span {
   margin-top: 10px;
   font-size: 1.2em;
-  color:#889785; 
+  color: #889785;
 }
 /* loading end */
 
@@ -263,6 +263,7 @@
   color: rgb(226 232 240);
   font-size: 0.875rem;
   line-height: 1.25rem;
+  margin-top: 4rem;
   padding: 2rem;
 }
 .footer__container {
@@ -1484,8 +1485,6 @@ span {
   .button__numbers:hover {
     color: #ddd;
   }
-
-
 }
 
 /* Media Query for Tablets iPads portrait mode */
@@ -1766,20 +1765,20 @@ span {
     height: 70vh;
   }
   /* HomeBanner start */
-.homeBanner__content {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  background-color: #555a54;
-}
-.homeBanner__image {
-  width: 70%;
-}
-  .footer {
+  .homeBanner__content {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #555a54;
+  }
+  .homeBanner__image {
+    width: 70%;
+  }
+  /* .footer {
     background-color: #555a54;
     color: rgb(226 232 240);
     font-size: 0.875rem;
@@ -1822,7 +1821,7 @@ span {
   .footer__active:hover,
   .footer__list:hover {
     color: #99a297;
-  }
+  } */
   .title__product {
     font-weight: 600;
     font-size: 1.5rem;
@@ -2018,7 +2017,6 @@ span {
   .button__numbers:hover {
     color: #ddd;
   }
-
 }
 
 /* Media Query for Laptops and Desktops */
@@ -2212,56 +2210,11 @@ span {
   .fa-arrow-left {
     margin-right: 0.5rem;
   }
-
   .cart__empty {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 70vh;
-  }
-  .footer {
-    background-color: #555a54;
-    color: rgb(226 232 240);
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    padding: 2rem;
-  }
-  .footer__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-top: 4rem;
-    padding-bottom: 2rem;
-  }
-  .footer__title {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-  .footer__about {
-    width: 100%;
-    margin-bottom: 1.5rem;
-  }
-  .about__description {
-    margin-bottom: 0.5rem;
-  }
-  .icon {
-    display: flex;
-    gap: 0.5rem;
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .footer__active,
-  .footer__list {
-    cursor: pointer;
-  }
-  .footer__active:hover,
-  .footer__list:hover {
-    color: #99a297;
   }
 }
