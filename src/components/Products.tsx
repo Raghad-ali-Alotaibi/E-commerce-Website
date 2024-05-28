@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
 import { AppDispatch } from "@/tookit/store"
@@ -70,14 +68,7 @@ const Products = () => {
 
   return (
     <>
-      {isLoading && (
-        <div className="loading-spinner-container">
-          <div className="loading-spinner">
-            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
-            <span>Loading...</span>
-          </div>
-        </div>
-      )}
+      {isLoading && <p>Loading</p>}
       {error && <p>error{error}</p>}
       <p className="title__product">Our Products</p>
       <div className="search__container">

@@ -7,24 +7,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* loading start */
-.loading-spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.loading-spinner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.loading-spinner span {
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #889785;
-}
-/* loading end */
 
 /* nav start */
 .nav {

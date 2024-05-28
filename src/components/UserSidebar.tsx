@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
-import { HiUser, HiShoppingBag, HiChartPie } from "react-icons/hi"
+import { HiUser, HiChartPie } from "react-icons/hi"
 
 // Define the type for the 'to' prop
 interface SidebarItemProps {
