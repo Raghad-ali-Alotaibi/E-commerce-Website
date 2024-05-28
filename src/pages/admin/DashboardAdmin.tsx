@@ -1,13 +1,19 @@
-import { redirect } from 'react-router-dom';
 import AdminSidebar from "@/components/AdminSidebar"
 import useUserState from "@/hooks/useUserState"
+import { useNavigate } from "react-router-dom"
 
 export const DashboardAdmin = () => {
-  const { userData } = useUserState()
+  const { userData, isLoading } = useUserState()
+  const navigate = useNavigate()
 
-  // If userData is null, redirect the user to the login page
-  if (!userData) {
-    return redirect("/login");
+  // If user data is still loading, show a loading indicator
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!userData || !userData.firstName) {
+    navigate("/login");
+    return null;
   }
 
   return (
