@@ -6,11 +6,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+      "@": path.resolve(__dirname, "./src")
+    }
   },
-  optimizeDeps: {
-    // Provide a map to resolve the bare specifier
-    include: ["@fortawesome/fontawesome-svg-core"],
-  },
+  build: {
+    rollupOptions: {
+      external: ["@fortawesome/fontawesome-svg-core"]
+    }
+  }
 });
