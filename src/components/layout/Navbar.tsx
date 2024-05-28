@@ -17,6 +17,10 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout())
   }
+
+  // Check if userData exists before accessing its properties
+  const isAdmin = userData && userData.isAdmin
+
   return (
     <nav>
       <div className="nav">
@@ -27,31 +31,27 @@ const Navbar = () => {
             </Link>
             {isLoggedIn && (
               <>
-                {isLoggedIn && (
-                  <>
-                    {!userData.isAdmin && ( // Check if user is not an admin
-                        <div className="nav__cart">
-                          <Link to="/cart" className="cart__link">
-                            <CartCount
-                              value={cartItems && cartItems.length > 0 ? cartItems.length : 0}
-                            />
-                          </Link>
-                        </div>
-                    )}
-                    <div className="nav__active">
-                      <div className="dashboard">
-                        <Link to={`/dashboard/${userData && userData.isAdmin ? "admin" : "user"}`}>
-                          {userData && userData.isAdmin ? "Admin" : "User"} Dashboard
-                        </Link>
-                      </div>
-                      <div className="logout-link">
-                        <Link to="/" onClick={handleLogout}>
-                          Logout
-                        </Link>
-                      </div>
-                    </div>
-                  </>
+                {!isAdmin && (
+                  <div className="nav__cart">
+                    <Link to="/cart" className="cart__link">
+                      <CartCount
+                        value={cartItems && cartItems.length > 0 ? cartItems.length : 0}
+                      />
+                    </Link>
+                  </div>
                 )}
+                <div className="nav__active">
+                  <div className="dashboard">
+                    <Link to={`/dashboard/${isAdmin ? "admin" : "user"}`}>
+                      {isAdmin ? "Admin" : "User"} Dashboard
+                    </Link>
+                  </div>
+                  <div className="logout-link">
+                    <Link to="/" onClick={handleLogout}>
+                      Logout
+                    </Link>
+                  </div>
+                </div>
               </>
             )}
             {!isLoggedIn && (
