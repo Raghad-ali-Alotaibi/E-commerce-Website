@@ -45,7 +45,7 @@ export type UserState = {
   error: null | string
   isLoading: boolean
   isLoggedIn: boolean
-  userData: User | null
+  userData: User
   token: null | string
 }
 
