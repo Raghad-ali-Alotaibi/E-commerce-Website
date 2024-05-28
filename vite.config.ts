@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
+      "@": path.resolve(__dirname, "./src"),
+      // Add alias for "@fortawesome/fontawesome-svg-core"
+      "@fortawesome/fontawesome-svg-core": "@fortawesome/fontawesome-svg-core/index.es.js"
     }
   },
   build: {
