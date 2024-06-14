@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Table } from "flowbite-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { MdDeleteForever, MdEditSquare } from "react-icons/md";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { Table } from "flowbite-react"
+import { MdDeleteForever, MdEditSquare } from "react-icons/md"
+import { SubmitHandler, useForm } from "react-hook-form"
 
-import { AppDispatch } from "@/tookit/store";
+import { AppDispatch } from "@/tookit/store"
 import {
   CreateCategory,
   UpdateCategory,
   deleteCategory,
   fetchCategories
-} from "@/tookit/slices/CategorySlice";
-import AdminSidebar from "@/components/AdminSidebar";
-import { Category, UpdateFormData } from "@/types";
-import useCategoriesState from "@/hooks/useCategoriesState";
+} from "@/tookit/slices/CategorySlice"
+import AdminSidebar from "@/components/AdminSidebar"
+import { Category, UpdateFormData } from "@/types"
+import useCategoriesState from "@/hooks/useCategoriesState"
 import { toastError } from "./Notifications "
 
 export const AdminCategories = () => {
-  const { categories, isLoading, error } = useCategoriesState();
-  const dispatch: AppDispatch = useDispatch();
+  const { categories, isLoading, error } = useCategoriesState()
+  const dispatch: AppDispatch = useDispatch()
 
   const {
     register,
@@ -28,61 +26,62 @@ export const AdminCategories = () => {
     reset,
     setValue,
     formState: { errors }
-  } = useForm<UpdateFormData>(); // Updated to use UpdateFormData
+  } = useForm<UpdateFormData>() // Updated to use UpdateFormData
 
-  const [isEdit, setIsEdit] = useState(false);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [isEdit, setIsEdit] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchCategories());
+      await dispatch(fetchCategories())
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  const onSubmit: SubmitHandler<UpdateFormData> = async (data) => { // Updated to use UpdateFormData
+  const onSubmit: SubmitHandler<UpdateFormData> = async (data) => {
+    // Updated to use UpdateFormData
     try {
       if (isEdit) {
         if (selectedCategoryId !== null) {
           await dispatch(
             UpdateCategory({ updateCategoryData: data, categoryId: selectedCategoryId })
-          );
-          setIsEdit(false);
+          )
+          setIsEdit(false)
         } else {
-          toastError("selectedCategoryId is null");
+          toastError("selectedCategoryId is null")
         }
       } else {
-        await dispatch(CreateCategory(data));
+        await dispatch(CreateCategory(data))
       }
-      reset();
+      reset()
     } catch (error) {
-      toastError("Create category failed");
+      toastError("Create category failed")
     }
-  };
+  }
 
   const handleEdit = async (category: Category) => {
-    setIsEdit(true);
-    setValue("categoryName", category.categoryName);
-    setSelectedCategoryId(category.categoryId);
-    setValue("categoryDescription", category.categoryDescription);
-  };
+    setIsEdit(true)
+    setValue("categoryName", category.categoryName)
+    setSelectedCategoryId(category.categoryId)
+    setValue("categoryDescription", category.categoryDescription)
+  }
 
   const handleDelete = async (categoryId: number) => {
     try {
-      const response = await dispatch(deleteCategory(categoryId));
-      console.log(response);
+      const response = await dispatch(deleteCategory(categoryId))
+      console.log(response)
     } catch (error) {
-      toastError("Delete category failed");
+      toastError("Delete category failed")
     }
-  };
+  }
 
   const truncateDescription = (categoryDescription: string, maxLength = 50) => {
     if (categoryDescription.length <= maxLength) {
-      return categoryDescription;
+      return categoryDescription
     } else {
-      return `${categoryDescription.slice(0, maxLength)}...`;
+      return `${categoryDescription.slice(0, maxLength)}...`
     }
-  };
+  }
 
   return (
     <div className="wrap">
@@ -90,10 +89,14 @@ export const AdminCategories = () => {
       {isLoading && (
         <div className="loading-spinner-container">
           <div className="loading-spinner">
-            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <i
+              className="fa fa-spinner"
+              style={{ color: "#889785", fontSize: "3em", animation: "spin 1s infinite linear" }}
+            ></i>
           </div>
         </div>
       )}
+
       {error && <p>error{error}</p>}
 
       {!isLoading && !error && (
@@ -157,7 +160,7 @@ export const AdminCategories = () => {
                         <button
                           className="button__edit"
                           onClick={() => {
-                            handleEdit(category);
+                            handleEdit(category)
                           }}
                         >
                           <MdEditSquare size={13} />
@@ -178,5 +181,5 @@ export const AdminCategories = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}

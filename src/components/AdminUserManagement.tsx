@@ -2,8 +2,6 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { Table } from "flowbite-react"
 import { MdDeleteForever } from "react-icons/md"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import AdminSidebar from "@/components/AdminSidebar"
 import useUserState from "@/hooks/useUserState"
@@ -37,7 +35,10 @@ export const AdminUserManagement = () => {
       {isLoading && (
         <div className="loading-spinner-container">
           <div className="loading-spinner">
-            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <i
+              className="fa fa-spinner"
+              style={{ color: "#889785", fontSize: "3em", animation: "spin 1s infinite linear" }}
+            ></i>
           </div>
         </div>
       )}

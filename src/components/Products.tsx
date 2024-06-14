@@ -4,8 +4,6 @@ import { IoPhonePortraitOutline } from "react-icons/io5"
 import { MdOutlineLaptopMac } from "react-icons/md"
 import { IoWatch } from "react-icons/io5"
 import { FaTv } from "react-icons/fa"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
 import { AppDispatch } from "@/tookit/store"
@@ -98,7 +96,10 @@ const Products = () => {
       {isLoading && (
         <div className="loading-spinner-container">
           <div className="loading-spinner">
-            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+            <i
+              className="fa fa-spinner"
+              style={{ color: "#889785", fontSize: "3em", animation: "spin 1s infinite linear" }}
+            ></i>
           </div>
         </div>
       )}
