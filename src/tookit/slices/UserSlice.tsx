@@ -89,8 +89,8 @@ const UserReducer = createSlice({
       })
       .addCase(UpdateUser.fulfilled, (state, action) => {
         if (state.userData) {
-          state.userData.firstName = action.payload.data.userDto.firstName
-          state.userData.lastName = action.payload.data.userDto.lastName
+          state.userData.firstName = action.payload.data.firstName
+          state.userData.lastName = action.payload.data.lastName
         }
         setLocalStorage("loginData", {
           userData: state.userData,

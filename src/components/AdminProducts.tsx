@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Table } from "flowbite-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { AppDispatch } from "@/tookit/store"
 import AdminSidebar from "@/components/AdminSidebar"
@@ -87,17 +89,15 @@ export const AdminProducts = () => {
 
   return (
     <div className="wrap">
-      {isLoading && <p>Loading</p>}
-      {error && <p>error{error}</p>}
       <AdminSidebar />
       <div className="dashboardAdmin__container">
         <div className="form-container__products">
           <form onSubmit={handleSubmit(onSubmit)}>
             <p>{isEdit ? "Edit Product" : "Create Product"}</p>
-            <div className="input-container">
+
+            <div>
               <input
                 type="text"
-                className="input-field"
                 {...register("productName", {
                   required: "Product Name is required",
                   maxLength: {
@@ -112,10 +112,9 @@ export const AdminProducts = () => {
               )}
             </div>
 
-            <div className="input-container">
+            <div>
               <input
                 type="text"
-                className="input-field"
                 {...register("productDescription", {
                   required: "Description is required",
                   maxLength: {
@@ -130,11 +129,10 @@ export const AdminProducts = () => {
               )}
             </div>
 
-            <div className="input-container">
+            <div>
               <input
                 type="number"
                 step="0.01"
-                className="input-field"
                 {...register("productPrice")}
                 placeholder="Product price"
               />
@@ -143,11 +141,10 @@ export const AdminProducts = () => {
               )}
             </div>
 
-            <div className="input-container">
+            <div>
               <input
                 type="number"
                 step="0.01"
-                className="input-field"
                 {...register("productQuantityInStock")}
                 placeholder="Product quantity"
               />
@@ -156,22 +153,12 @@ export const AdminProducts = () => {
               )}
             </div>
 
-            <div className="input-container">
-              <input
-                type="text"
-                className="input-field"
-                {...register("productImage")}
-                placeholder="Product Image URL"
-              />
+            <div>
+              <input type="text" {...register("productImage")} placeholder="Product Image URL" />
             </div>
 
             <div className="input-container">
-              <input
-                type="number"
-                className="input-field"
-                {...register("categoryId")}
-                placeholder="category Id"
-              />
+              <input type="number" {...register("categoryId")} placeholder="category Id" />
               {errors.categoryId && (
                 <span className="error-message">{errors.categoryId.message}</span>
               )}
@@ -180,57 +167,59 @@ export const AdminProducts = () => {
           </form>
         </div>
 
-        <Table className="table__products">
-          <Table.Head>
-            <Table.HeadCell className="table-head-cell">Image</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Name</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Categories</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Description</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Price</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Quantity</Table.HeadCell>
-            <Table.HeadCell className="table-head-cell">Actions</Table.HeadCell>
-          </Table.Head>
-          <Table.Body>
-            {products.map((product) => (
-              <Table.Row className="table-row" key={product.productId}>
-                <Table.Cell className="table-cell">
-                  <img
-                    src={product.productImage}
-                    alt={product.productName}
-                    className="cartitem__img"
-                  />
-                </Table.Cell>
-                <Table.Cell className="table-cell">{product.productName}</Table.Cell>
-                <Table.Cell className="table-cell">
-                  {(() => {
-                    const category = categories.find(
-                      (category) => category.categoryId === product.categoryId
-                    )
-                    return category ? category.categoryName : "Unknown"
-                  })()}
-                </Table.Cell>
-                <Table.Cell className="table-cell">
-                  {truncateDescription(product.productDescription)}
-                </Table.Cell>
-                <Table.Cell className="table-cell">{product.productPrice}</Table.Cell>
-                <Table.Cell className="table-cell">{product.productQuantityInStock}</Table.Cell>
-                <Table.Cell className="table-cell">
-                  <div className="button__container">
-                    <button className="button__edit" onClick={() => handleEdit(product)}>
-                      <MdEditSquare size={13} />
-                    </button>
-                    <button
-                      className="button__delete"
-                      onClick={() => handleDelete(product.productId)}
-                    >
-                      <MdDeleteForever size={13} />
-                    </button>
-                  </div>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        <div style={{ overflowX: "auto" }}>
+          <Table className="table__products">
+            <Table.Head>
+              <Table.HeadCell className="table-head-cell">Image</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Name</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Categories</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Description</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Price</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Quantity</Table.HeadCell>
+              <Table.HeadCell className="table-head-cell">Actions</Table.HeadCell>
+            </Table.Head>
+            <Table.Body>
+              {products.map((product) => (
+                <Table.Row className="table-row" key={product.productId}>
+                  <Table.Cell className="table-cell">
+                    <img
+                      src={product.productImage}
+                      alt={product.productName}
+                      className="cartitem__img"
+                    />
+                  </Table.Cell>
+                  <Table.Cell className="table-cell">{product.productName}</Table.Cell>
+                  <Table.Cell className="table-cell">
+                    {(() => {
+                      const category = categories.find(
+                        (category) => category.categoryId === product.categoryId
+                      )
+                      return category ? category.categoryName : "Unknown"
+                    })()}
+                  </Table.Cell>
+                  <Table.Cell className="table-cell">
+                    {truncateDescription(product.productDescription)}
+                  </Table.Cell>
+                  <Table.Cell className="table-cell">{product.productPrice}</Table.Cell>
+                  <Table.Cell className="table-cell">{product.productQuantityInStock}</Table.Cell>
+                  <Table.Cell className="table-cell">
+                    <div className="button__container">
+                      <button className="button__edit" onClick={() => handleEdit(product)}>
+                        <MdEditSquare size={13} />
+                      </button>
+                      <button
+                        className="button__delete"
+                        onClick={() => handleDelete(product.productId)}
+                      >
+                        <MdDeleteForever size={13} />
+                      </button>
+                    </div>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        </div>
       </div>
     </div>
   )

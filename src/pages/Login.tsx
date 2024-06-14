@@ -6,7 +6,7 @@ import { AppDispatch } from "@/tookit/store"
 import { loginUser } from "@/tookit/slices/UserSlice"
 import { LoginFormData } from "@/types"
 import PageTitle from "@/components/PageTitle"
-import { toastError} from "@/components/Notifications "
+import { toastError, toastSuccess} from "@/components/Notifications "
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -23,6 +23,7 @@ export const Login = () => {
       const response = await dispatch(loginUser(data))
       const isAdmin = response.payload.data.userDto.isAdmin
       navigate(isAdmin ? "/dashboard/admin" : "/dashboard/user")
+      toastSuccess("Welcome back")
     } catch (error) {
       toastError("Login failed")
     }

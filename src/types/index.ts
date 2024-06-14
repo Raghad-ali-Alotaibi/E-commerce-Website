@@ -90,7 +90,11 @@ export type CategoryStates = {
   error: string | null
   isLoading: boolean
 }
-
+export type UpdateFormData = {
+  categoryId: number
+  categoryName: string
+  categoryDescription: string
+}
 export type CreateFormData = {
   categoryName: string
   categoryDescription: string

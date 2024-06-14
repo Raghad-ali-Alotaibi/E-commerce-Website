@@ -14,6 +14,9 @@ const CartReducer = createSlice({
   initialState: initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Product>) => {
+      if (!state.cartItems) {
+        state.cartItems = []; // Initialize cartItems if undefined
+      }
       const item = state.cartItems.find(
         (cartItem) => cartItem.productId == action.payload.productId
       )

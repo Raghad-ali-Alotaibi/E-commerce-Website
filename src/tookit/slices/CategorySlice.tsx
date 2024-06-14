@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CategoryStates, CreateFormData } from "@/types"
+import { CategoryStates, CreateFormData, UpdateFormData } from "@/types"
 import api from "@/api"
 import { getToken } from "@/utils/localStorage"
 
@@ -34,18 +34,13 @@ export const UpdateCategory = createAsyncThunk(
     updateCategoryData,
     categoryId
   }: {
-    updateCategoryData: CreateFormData
+    updateCategoryData: UpdateFormData
     categoryId: number
   }) => {
-    const response = await api.put(`/categories/${categoryId}`, updateCategoryData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`
-      }
-    })
+    const response = await api.put(`/categories/${categoryId}`, updateCategoryData)
     return response.data
   }
 )
-
 
 export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
@@ -87,6 +82,7 @@ const CategoryReducer = createSlice({
         if (FindCategory) {
           FindCategory.categoryName = action.payload.data.categoryName
           FindCategory.categoryDescription = action.payload.data.categoryDescription
+          state.isLoading = false
         }
       })
       .addMatcher(
@@ -107,5 +103,3 @@ const CategoryReducer = createSlice({
 })
 
 export default CategoryReducer.reducer
-
-

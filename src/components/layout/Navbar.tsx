@@ -27,16 +27,14 @@ const Navbar = () => {
         <div className="nav__container">
           <div className="nav__content">
             <Link to="/">
-              <img className="logo" src="./images/logo.png" alt="logo" />
+              <img className="logo" src="/images/logo.png" alt="logo" />
             </Link>
             {isLoggedIn && (
               <>
                 {!isAdmin && (
                   <div className="nav__cart">
                     <Link to="/cart" className="cart__link">
-                      <CartCount
-                        value={cartItems && cartItems.length > 0 ? cartItems.length : 0}
-                      />
+                      <CartCount value={cartItems && cartItems.length > 0 ? cartItems.length : 0} />
                     </Link>
                   </div>
                 )}

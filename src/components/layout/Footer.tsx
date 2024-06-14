@@ -64,7 +64,7 @@ const Footer = () => {
             At our electronics store, we are dedicated to providing the latest and greatest devices
             to our customers. With a wide selection of phones, TVs, laptops, watches.
           </p>
-          <p>© {new Date().getFullYear()} Tech Hive. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Smart Tech. All rights reserved.</p>
         </div>
         <div>
           <h3 className="footer__title">Follow Us</h3>
@@ -75,7 +75,7 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <AiFillTwitterCircle size={30} />
+              <AiFillTwitterCircle size={26} />
             </a>
             <a
               href="https://www.instagram.com"
@@ -83,7 +83,7 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <AiFillInstagram size={30} />
+              <AiFillInstagram size={26} />
             </a>
             <a
               href="https://www.facebook.com"
@@ -91,7 +91,7 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <MdFacebook size={30} />
+              <MdFacebook size={26} />
             </a>
             <a
               href="https://www.youtube.com"
@@ -99,7 +99,7 @@ const Footer = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <AiFillYoutube size={30} />
+              <AiFillYoutube size={26} />
             </a>
           </div>
         </div>

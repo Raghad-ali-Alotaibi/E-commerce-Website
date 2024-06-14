@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import { IoPhonePortraitOutline } from "react-icons/io5"
+import { MdOutlineLaptopMac } from "react-icons/md"
+import { IoWatch } from "react-icons/io5"
+import { FaTv } from "react-icons/fa"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 import { fetchProducts, searchProducts } from "@/tookit/slices/ProductSlice"
 import { AppDispatch } from "@/tookit/store"
@@ -8,6 +14,7 @@ import { Horizontal } from "./Horizontal"
 import useProductState from "@/hooks/useProductState"
 import useCategoriesState from "@/hooks/useCategoriesState"
 import { fetchCategories } from "@/tookit/slices/CategorySlice"
+import Categories from "./Categories"
 
 const Products = () => {
   const { products, isLoading, error, totalPages } = useProductState()
@@ -43,10 +50,6 @@ const Products = () => {
     setPageNumber((currentPage) => currentPage + 1)
   }
 
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(event.target.value)
-  }
-
   const handleSearch = async () => {
     if (searchKeyword.trim()) {
       await dispatch(searchProducts(searchKeyword))
@@ -68,8 +71,6 @@ const Products = () => {
 
   return (
     <>
-      {isLoading && <p>Loading</p>}
-      {error && <p>error{error}</p>}
       <p className="title__product">Our Products</p>
       <div className="search__container">
         <div className="search__content">
@@ -93,40 +94,62 @@ const Products = () => {
           </button>
         </div>
       </div>
-      <div className="container">
-        <div className="categories__container">
-          <p className="title__categories">Filter by categories:</p>
-          {categories &&
-            categories.length > 0 &&
-            categories.map((category) => (
-              <div key={category.categoryId} className="categories">
-                <label htmlFor="categories">
-                  <input
-                    type="checkbox"
-                    value={category.categoryId}
-                    checked={selectedCategories.includes(category.categoryId)}
-                    onChange={() => handleCategoryChange(category.categoryId)}
-                  />
-                  {category.categoryName}
-                </label>
-              </div>
-            ))}
-        </div>
-
-        <div className="products__sort">
-          <p className="products-sort__title">Sort By :</p>
-          <select name="sort" id="sort" onChange={handleSortChange}>
-            <option value="price">Price</option>
-            <option value="product name">Product Name</option>
-          </select>
-        </div>
-      </div>
       <Horizontal />
-      <section className="products">
-        {products &&
-          products.length > 0 &&
-          products.map((product) => <SingleProduct key={product.productSlug} product={product} />)}
-      </section>
+      {isLoading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin style={{ color: "#889785", fontSize: "3em" }} />
+          </div>
+        </div>
+      )}
+      {error && <p>error{error}</p>}
+      
+      {!isLoading && !error && (
+        <div className="display__categories">
+          <div className="categories__container">
+            {categories &&
+              categories.length > 0 &&
+              categories.map((category) => {
+                let icon
+                switch (category.categoryName) {
+                  case "Phone":
+                    icon = <IoPhonePortraitOutline size={20} />
+                    break
+                  case "Laptop":
+                    icon = <MdOutlineLaptopMac size={20} />
+                    break
+                  case "Watch":
+                    icon = <IoWatch size={20} />
+                    break
+                  case "TV":
+                    icon = <FaTv size={20} />
+                    break
+                  default:
+                    icon = <IoPhonePortraitOutline size={20} />
+                }
+                return (
+                  <Categories
+                    key={category.categoryId}
+                    categoryId={category.categoryId}
+                    label={category.categoryName}
+                    selected={selectedCategories.includes(category.categoryId)}
+                    handleCategoryChange={handleCategoryChange}
+                    icon={icon}
+                  />
+                )
+              })}
+          </div>
+        </div>
+      )}
+      {!isLoading && !error && (
+        <section className="products">
+          {products &&
+            products.length > 0 &&
+            products.map((product) => (
+              <SingleProduct key={product.productSlug} product={product} />
+            ))}
+        </section>
+      )}
       <div className="pagination">
         <button
           className="button__pagination"

@@ -22,10 +22,10 @@ const UserMenu = () => {
       </div>
       {isOpen && (
         <div className="dropdown-menu">
-          <div>
+          <div className="dropdown-text">
             <Link to="/register">Register</Link>
           </div>
-          <div>
+          <div className="dropdown-text">
             <Link to="/login">Login</Link>
           </div>
         </div>

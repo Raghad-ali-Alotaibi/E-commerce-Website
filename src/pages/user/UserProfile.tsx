@@ -16,6 +16,7 @@ export const UserProfile = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<UpdateUserFormData>()
 
@@ -30,7 +31,7 @@ export const UserProfile = () => {
       const response = await dispatch(
         UpdateUser({ updateUserData: data, userId: userData?.userId })
       )
-      console.log(response)
+      reset()
     } catch (error) {
       console.log(error)
     }
@@ -43,7 +44,7 @@ export const UserProfile = () => {
         {userData && (
           <div className="dashboard__content">
             <p>First Name: {userData.firstName}</p>
-            <p>Email: {userData.email}</p>
+            <p>Last Name: {userData.lastName}</p>
             <button className="btn__close"
               onClick={() => {
                 setIsFormOpen(!isFormOpen)
@@ -54,7 +55,7 @@ export const UserProfile = () => {
             <div>
               {isFormOpen && (
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="form__field">
+                  <div>
                     <input
                       type="text"
                       placeholder="Enter your first name"
@@ -69,7 +70,7 @@ export const UserProfile = () => {
                     {errors.firstName && <span>{errors.firstName.message}</span>}
                   </div>
 
-                  <div className="form__field">
+                  <div>
                     <input
                       type="text"
                       placeholder="Enter your last name"

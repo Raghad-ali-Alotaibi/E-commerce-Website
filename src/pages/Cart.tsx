@@ -88,7 +88,7 @@ export const Cart = () => {
                       >
                         -
                       </button>
-                      <span>{cartItem.orderQuantity}</span>
+                      <span className="order__quantity">{cartItem.orderQuantity}</span>
                       <button
                         className="button__quantity"
                         onClick={() => {
@@ -105,7 +105,7 @@ export const Cart = () => {
                       className="button__delete"
                       onClick={() => handleRemove(cartItem.productId)}
                     >
-                      <MdDeleteForever size={13} />
+                      <MdDeleteForever size={16} />
                     </button>
                     </div>
                   </div>

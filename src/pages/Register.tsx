@@ -20,8 +20,8 @@ export const Register = () => {
 
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
-      const response = await dispatch(registerUser(data))
-      toastSuccess(response.payload.message + "  Registered")
+      const response = await dispatch(registerUser(data))      
+      toastSuccess("Registered successful. Welcome")
       navigate("/login")
     } catch (error) {
       toastError("Registration failed")
