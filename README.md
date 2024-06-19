@@ -1,56 +1,25 @@
-# Project: Frontend for E-commerce Website
+Frontend E-commerce Website 💻🛍️
 
-Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
+This repository contains the code for the frontend of an E-commerce website built using React and TypeScript. The website provides a user-friendly interface for browsing products, adding them to the cart, and completing purchases.
+Features 🚀
 
-### Level 1: Basic Requirements
+    Product Catalog: Browse through a wide range of products organized into categories.
+    Product Details: View detailed information about each product, including images, descriptions, and pricing.
+    Shopping Cart: Add products to the shopping cart and manage quantities before checkout.
+    User Authentication: Register new users, login with existing accounts, and securely manage user sessions.
+    Order Tracking: Track the status of orders and view order history.
+Responsive Design: The app is designed to work seamlessly across different devices, including desktops, tablets, and smartphones.
 
-**Pages to Create:**
+Technologies Used 💻
 
-1. Home page (list all the products)
-2. Product page (contain the details of a product)
-3. Dashboard page
+    React: JavaScript library for building user interfaces.
+    TypeScript: Typed superset of JavaScript for improved code quality and developer productivity.
+    React Router: For handling navigation within the application.
+    Redux: State management library for managing application state.
+    JWT Authentication: JSON Web Tokens for secure user authentication and authorization.
 
-**Functionalities for a Visitor:**
+Usage 📋
 
-- Get list of products
-- Filter products by categories or price
-- Search products by name
-- Add products to a cart
-- Remove products from a cart
-
-**Functionalities for an Admin:**
-
-- Add a new product, update info of a product, remove a product
-
-### Level 2: Additional Requirements
-
-**Authentication:**
-
-- Implement register and login functionality via email and password
-- Protect the routes based on login and admin status
-
-**Functionalities for an Admin:**
-
-- list all users, delete or block a user.
-- list all orders
-- Add a new category, update info of a category, remove a category
-
-**Form Validation:**
-
-- Implement form validation.
-
-### Level 3: Bonus Requirement (Optional)
-
-If you have a higher skill level and finish the previous requirements before the deadline, you can tackle the following bonus tasks:
-
-- Messages, show loading, success, and error messages (e.g., when loading products list or adding new product)
-- Implement pagination feature
-- Create a Profile Page (only available if user logs in), implement editing user profile feature (user can change first name, last name)
-
-- Peer Review:
-- Review the code and implementation of 2 assignments from other participants.
-- Provide constructive feedback and suggestions for improvement.
-
-`Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
-
-Happy coding!
+    Browse Products: Explore the product catalog and view detailed product information.
+    Add to Cart: Add products to the shopping cart and manage quantities.
+    User Authentication: Register for a new account or login with existing credentials.
