@@ -1,4 +1,4 @@
-Frontend E-commerce Website 💻🛍️
+#Frontend E-commerce Website 💻🛍️
 
 This repository contains the code for the frontend of an E-commerce website built using React and TypeScript. The website provides a user-friendly interface for browsing products, adding them to the cart, and completing purchases.
 
