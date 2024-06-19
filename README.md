@@ -23,3 +23,5 @@ This repository contains the code for the frontend of an E-commerce website buil
 - Browse Products: Explore the product catalog and view detailed product information.
 - Add to Cart: Add products to the shopping cart and manage quantities.
 - User Authentication: Register for a new account or login with existing credentials.
+
+deployed link 🚀: https://merry-unicorn-584ddd.netlify.app
